@@ -2,216 +2,1232 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>全市场策略监控 - 2026-05-26</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:#0f1117;color:#d1d4dc}
-.header{padding:16px 20px;border-bottom:1px solid #2a2e39;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;background:#1a1d27}
-.header h1{font-size:18px;color:#fff}
-.mkt-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;margin-left:4px}
-.mkt-A{background:#1a3a2a;color:#22ab94}.mkt-E{background:#3a2a1a;color:#d6a64a}.mkt-U{background:#1a2a3a;color:#5b9bd5}.mkt-H{background:#2a1a3a;color:#ab65d6}.mkt-I{background:#1a3a3a;color:#26a69a}.mkt-L{background:#3a1a1a;color:#ef5350;font-size:9px}
-.tabs{display:flex;gap:0}
-.tab{padding:8px 20px;border:1px solid #2a2e39;background:#1a1d27;color:#9598a1;cursor:pointer;font-size:13px;border-radius:6px 6px 0 0}
-.tab.active{background:#0f1117;color:#fff;border-bottom-color:#0f1117}
-.tab-content{display:none}
-.tab-content.active{display:block}
-.stats-bar{display:flex;gap:20px;padding:12px 20px;background:#1a1d27;border-bottom:1px solid #2a2e39;font-size:12px;flex-wrap:wrap;align-items:center}
-.stat-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
-.filters{display:flex;gap:6px;padding:8px 20px;flex-wrap:wrap;border-bottom:1px solid #2a2e39}
-.f-btn{padding:4px 12px;border-radius:4px;border:1px solid #2a2e39;background:#1a1d27;color:#9598a1;font-size:11px;cursor:pointer}
-.f-btn.active,.f-btn:hover{background:#2a2e39;color:#fff;border-color:#5b9bd5}
-.container{max-width:1800px;margin:0 auto;padding:16px 20px}
-.gtitle{font-size:14px;color:#5b9bd5;font-weight:600;padding:12px 0 6px;border-bottom:1px solid #2a2e39;display:flex;align-items:center;gap:8px;margin-top:4px}
-.gtitle .cnt{font-size:11px;color:#787b86;font-weight:400}
-table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:12px}
-th{padding:8px 10px;text-align:left;color:#787b86;font-weight:500;font-size:10px;border-bottom:1px solid #2a2e39;cursor:pointer;white-space:nowrap}
-th:hover{color:#fff}
-.sort-asc::after{content:' ▲';font-size:9px}
-.sort-desc::after{content:' ▼';font-size:9px}
-td{padding:8px 10px;border-bottom:1px solid #1e222d}
-tr:hover td{background:#1a1d27}
-.name-cell{color:#fff;font-weight:500}
-.code-cell{color:#787b86;font-size:10px}
-.chg-bar{display:inline-block;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:600}
-.sig-none{color:#3a3e47}
-.sig-buy{color:#22ab94;font-weight:600;font-size:11px}
-.sig-sell{color:#ef5350;font-weight:600;font-size:11px}
-.trend-tag{padding:2px 6px;border-radius:3px;font-size:10px;font-weight:600}
-.trend-tag.approx{background:#3a2a1a;color:#d6a64a}
-.trend-tag.hit{background:#1a3a2a;color:#22ab94}
-.no-data{color:#3a3e47;font-style:italic;font-size:11px}
-tr.approx td:first-child{border-left:2px solid #d6a64a}
-tr.hit td:first-child{border-left:2px solid #22ab94}
-.summary{display:flex;gap:24px;padding:12px 0;font-size:12px;flex-wrap:wrap}
-.s-item{display:flex;flex-direction:column}
-.s-item .label{color:#787b86;font-size:11px}
-.s-item .value{color:#fff;font-size:16px;font-weight:600}
-.footer{text-align:center;padding:20px;color:#787b86;font-size:10px;border-top:1px solid #2a2e39;margin-top:20px}
-@media(max-width:768px){.header{padding:10px 12px}.container{padding:6px 10px}}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股超跌反弹筛选 - 2026-05-26</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0f1117; color: #d1d4dc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; min-height: 100vh; }
+.header { background: linear-gradient(135deg, #1a1d2e 0%, #13151f 100%); padding: 24px 32px; border-bottom: 2px solid #2a2e42; }
+.header h1 { font-size: 24px; font-weight: 700; color: #fff; }
+.header .sub { font-size: 14px; color: #787b86; margin-top: 8px; }
+.badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.badge { background: #2a2e42; color: #d1d4dc; padding: 4px 12px; border-radius: 4px; font-size: 12px; border: 1px solid #3a3e52; }
+.badge.active { background: #1b3a3a; border-color: #26a69a; color: #26a69a; }
+.stats { display: flex; gap: 24px; margin: 20px 32px; flex-wrap: wrap; }
+.stat-card { background: #1a1d2e; border: 1px solid #2a2e42; border-radius: 8px; padding: 16px 24px; text-align: center; min-width: 120px; }
+.stat-card .num { font-size: 28px; font-weight: 700; color: #fff; }
+.stat-card .label { font-size: 12px; color: #787b86; margin-top: 4px; }
+.stat-card .num.green { color: #26a69a; }
+.stat-card .num.red { color: #ef5350; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 32px 40px; }
+.stock-panel { background: #1a1d2e; border: 1px solid #2a2e42; border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
+.stock-header { padding: 20px 24px; background: #222538; border-bottom: 1px solid #2a2e42; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.stock-header .name { font-size: 18px; font-weight: 700; color: #fff; }
+.stock-header .code { font-size: 12px; color: #787b86; margin-left: 8px; }
+.stock-header .price-area { text-align: right; }
+.stock-header .price { font-size: 24px; font-weight: 700; }
+.stock-header .price.up { color: #ef5350; } .stock-header .price.down { color: #26a69a; }
+.stock-header .change { font-size: 14px; margin-left: 4px; }
+.tag { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.tag-hit { background: #1b3a1b; color: #4caf50; border: 1px solid #2e5a2e; }
+.tag-near { background: #3a351b; color: #ffc107; border: 1px solid #5a502e; }
+.tag-miss { background: #3a1b1b; color: #f44336; border: 1px solid #5a2e2e; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; padding: 16px 24px; background: #1a1d2e; }
+.metric { text-align: center; }
+.metric .val { font-size: 16px; font-weight: 600; color: #fff; }
+.metric .lbl { font-size: 11px; color: #787b86; margin-top: 2px; }
+.chart-wrap { padding: 8px 16px 16px; }
+.chart-day { width: 100%; height: 400px; }
+.chart-week { width: 100%; height: 350px; margin-top: 8px; }
+.footer { text-align: center; padding: 24px; color: #787b86; font-size: 12px; border-top: 1px solid #2a2e42; margin-top: 20px; }
+.annotation-bar { display: flex; gap: 12px; padding: 8px 24px; flex-wrap: wrap; font-size: 12px; }
+.ann-item { background: #222538; padding: 4px 10px; border-radius: 4px; }
+.annotation-bar .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+.annotation-bar .dot.red { background: #ef5350; }
+.annotation-bar .dot.green { background: #26a69a; }
+.annotation-bar .dot.orange { background: #ff9800; }
+</style>
 </head>
 <body>
 <div class="header">
-  <h1>全市场策略监控</h1>
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab(0)">自选监控</div>
-    <div class="tab" onclick="switchTab(1)">超跌反弹</div>
-  </div>
+<h1>A股超跌反弹筛选</h1>
+<div class="sub">数据日期: 2026-05-26 | 来源: 陆股通全量 (3235只) | 筛选条件: 0<PE≤50, 60日跌>3%, 10日涨>0%</div>
+<div class="badges">
+<span class="badge active">超跌反弹</span>
+<span class="badge">PE ≤ 50</span>
+<span class="badge">60日跌幅 > 3%</span>
+<span class="badge">10日反弹 > 0%</span>
+<span class="badge">周线企稳</span>
 </div>
-<div class="stats-bar" id="stats">
-  <span>📅 2026-05-26</span>
-  <span><span class="stat-dot" style="background:#22ab94"></span>买入 15</span>
-  <span><span class="stat-dot" style="background:#ef5350"></span>卖出 13</span>
-  <span>自选 49 | A股 29 | 美股 17 | 指数 2 | 港股 2</span>
 </div>
-<div class="filters" id="filts">
-  <button class="f-btn active" onclick="filterMkt('all')">全部</button>
-  <button class="f-btn" onclick="filterMkt('A')">A股</button>
-  <button class="f-btn" onclick="filterMkt('E')">ETF</button>
-  <button class="f-btn" onclick="filterMkt('U')">美股</button>
-  <button class="f-btn" onclick="filterMkt('H')">港股</button>
-  <button class="f-btn" onclick="filterSig('buy')" style="color:#22ab94">买入</button>
-  <button class="f-btn" onclick="filterSig('sell')" style="color:#ef5350">卖出</button>
+<div class="stats">
+<div class="stat-card"><div class="num">3235</div><div class="label">扫描总数</div></div>
+<div class="stat-card"><div class="num green">320</div><div class="label">已扫描</div></div>
+<div class="stat-card"><div class="num red">6</div><div class="label">初筛命中</div></div>
+<div class="stat-card"><div class="num" style="color:#ffc107">5</div><div class="label">周线确认</div></div>
 </div>
 <div class="container">
-<div class="tab-content active" id="tab0">
-<div class="gtitle">A股 <span class="cnt">(15)</span></div>
-<table data-table-id="t0"><thead><tr><th onclick="sortT(0)">名称</th><th onclick="sortT(1)">代码</th><th onclick="sortT(2)">市场</th><th onclick="sortT(3)">PE</th><th onclick="sortT(4)">市值</th><th onclick="sortT(5)">60日</th><th onclick="sortT(6)">20日</th><th onclick="sortT(7)">10日</th><th onclick="sortT(8)">5日</th><th onclick="sortT(9)">今日</th><th onclick="sortT(10)">信号</th></tr></thead><tbody>
-<tr data-mkt="A" data-sig="2"><td class="name-cell">川仪股份</td><td class="code-cell">sh603100</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>22.6</td><td>¥101亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-12.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-20.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.6%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+26.7%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="A" data-sig="1"><td class="name-cell">海信家电</td><td class="code-cell">sz000921</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>8.2</td><td>¥226亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.0%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+9.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+0.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+28.1%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="A" data-sig="2"><td class="name-cell">特变电工</td><td class="code-cell">sh600089</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>18.1</td><td>¥1315亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+17.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-13.9%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-6.0%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-10.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+33.3%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="A" data-sig="0"><td class="name-cell">中煤能源</td><td class="code-cell">sh601898</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>13.3</td><td>¥1409亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+23.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+4.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-12.5%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-4.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+19.8%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="A" data-sig="0"><td class="name-cell">国投电力</td><td class="code-cell">sh600886</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>13.1</td><td>¥1034亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+5.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+6.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+15.7%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="A" data-sig="0"><td class="name-cell">华能国际</td><td class="code-cell">sh600011</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>6.6</td><td>¥826亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+0.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+7.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+7.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.5%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="A" data-sig="0"><td class="name-cell">中国核电</td><td class="code-cell">sh601985</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>21.8</td><td>¥1652亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.7%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-5.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+9.8%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="A" data-sig="0"><td class="name-cell">中国广核</td><td class="code-cell">sz003816</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>21.2</td><td>¥1813亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+22.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+17.9%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+4.9%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="A" data-sig="0"><td class="name-cell">招商银行</td><td class="code-cell">sh600036</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>6.2</td><td>¥7633亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-9.9%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-4.6%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-7.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-2.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+45.5%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="A" data-sig="0"><td class="name-cell">赣锋锂业</td><td class="code-cell">sz002460</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>21.4</td><td>¥908亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+19.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+5.2%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-6.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-10.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+91.7%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="A" data-sig="1"><td class="name-cell">工业富联</td><td class="code-cell">sh601138</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>32.8</td><td>¥1.4万亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+13.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+21.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.0%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+83.5%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="A" data-sig="2"><td class="name-cell">中国铁建</td><td class="code-cell">sh601186</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>4.9</td><td>¥729亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-17.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-13.0%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-7.6%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-6.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.9%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="A" data-sig="0"><td class="name-cell">江苏银行</td><td class="code-cell">sh600919</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>4.8</td><td>¥2028亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+9.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+7.7%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-2.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+12.1%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="A" data-sig="2"><td class="name-cell">岩山科技</td><td class="code-cell">sz002195</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>550.5</td><td>¥460亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+15.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-22.6%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-10.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-8.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+13.2%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="A" data-sig="1"><td class="name-cell">良信股份</td><td class="code-cell">sz002706</td><td><span class="mkt-badge mkt-A">🇨🇳 A股</span></td><td>66.9</td><td>¥123亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+27.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+17.5%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+29.5%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+11.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+13.9%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-</tbody></table>
-<div class="gtitle">ETF <span class="cnt">(13)</span></div>
-<table data-table-id="t1"><thead><tr><th onclick="sortT(0)">名称</th><th onclick="sortT(1)">代码</th><th onclick="sortT(2)">市场</th><th onclick="sortT(3)">PE</th><th onclick="sortT(4)">市值</th><th onclick="sortT(5)">60日</th><th onclick="sortT(6)">20日</th><th onclick="sortT(7)">10日</th><th onclick="sortT(8)">5日</th><th onclick="sortT(9)">今日</th><th onclick="sortT(10)">信号</th></tr></thead><tbody>
-<tr data-mkt="E" data-sig="1"><td class="name-cell">通信ETF国泰</td><td class="code-cell">sh515880</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥309亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+50.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+42.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+10.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.6%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="E" data-sig="1"><td class="name-cell">创业板ETF易方达</td><td class="code-cell">sz159915</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥451亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+27.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+21.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+4.1%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="E" data-sig="0"><td class="name-cell">光伏ETF华泰柏瑞</td><td class="code-cell">sh515790</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥90亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+15.8%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-0.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-0.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.2%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="E" data-sig="2"><td class="name-cell">稀土ETF富国</td><td class="code-cell">sz159713</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥10亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+11.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-9.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.7%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="E" data-sig="1"><td class="name-cell">芯片ETF华夏</td><td class="code-cell">sz159995</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥284亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+56.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+38.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+44.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+16.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.7%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="E" data-sig="2"><td class="name-cell">军工龙头ETF富国</td><td class="code-cell">sh512710</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥86亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-6.9%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-16.8%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-8.8%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-9.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.0%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="E" data-sig="0"><td class="name-cell">电网设备ETF国泰</td><td class="code-cell">sh561380</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥75亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+34.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+6.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.2%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.4%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="E" data-sig="0"><td class="name-cell">电网设备ETF华夏</td><td class="code-cell">sz159326</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥303亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+37.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+6.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-4.5%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.2%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="E" data-sig="1"><td class="name-cell">科创半导体ETF华夏</td><td class="code-cell">sh588170</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥120亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+77.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+42.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+50.0%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+20.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.8%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="E" data-sig="1"><td class="name-cell">机器人ETF景顺</td><td class="code-cell">sz159559</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥25亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+7.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+17.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+6.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.6%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="E" data-sig="2"><td class="name-cell">卫星ETF富国</td><td class="code-cell">sh563230</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥54亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.0%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-6.9%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-6.2%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-9.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.0%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="E" data-sig="2"><td class="name-cell">港股创新药ETF广发</td><td class="code-cell">sh513120</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥245亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-5.7%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-11.8%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-8.5%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-7.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.6%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="E" data-sig="1"><td class="name-cell">机器人ETF华夏</td><td class="code-cell">sh562500</td><td><span class="mkt-badge mkt-E">🇨🇳 ETF</span></td><td>--</td><td>¥210亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+18.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+11.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+18.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+6.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.2%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-</tbody></table>
-<div class="gtitle">美股 <span class="cnt">(15)</span></div>
-<table data-table-id="t2"><thead><tr><th onclick="sortT(0)">名称</th><th onclick="sortT(1)">代码</th><th onclick="sortT(2)">市场</th><th onclick="sortT(3)">PE</th><th onclick="sortT(4)">市值</th><th onclick="sortT(5)">60日</th><th onclick="sortT(6)">20日</th><th onclick="sortT(7)">10日</th><th onclick="sortT(8)">5日</th><th onclick="sortT(9)">今日</th><th onclick="sortT(10)">信号</th></tr></thead><tbody>
-<tr data-mkt="U" data-sig="2"><td class="name-cell">高途</td><td class="code-cell">usGOTU</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>亏损</td><td>¥2亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-21.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-16.7%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-6.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+4.1%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="U" data-sig="0"><td class="name-cell">微策略</td><td class="code-cell">usMSTR</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>亏损</td><td>¥544亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+26.9%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-2.9%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-16.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+457.2%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="U" data-sig="1"><td class="name-cell">Sweetgreen</td><td class="code-cell">usSG</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>2.4</td><td>¥9亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+47.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+80.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+48.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+48.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+16.7%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="U" data-sig="1"><td class="name-cell">Veracyte</td><td class="code-cell">usVCYT</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>31.8</td><td>¥30亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+5.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+21.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+31.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+12.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+50.7%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="U" data-sig="0"><td class="name-cell">特斯拉</td><td class="code-cell">usTSLA</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>830.7</td><td>¥1.4万亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+7.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+14.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-2.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+498.8%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="U" data-sig="1"><td class="name-cell">Sezzle</td><td class="code-cell">usSEZL</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>18.0</td><td>¥18亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+66.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+45.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+32.5%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+4.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+186.7%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="U" data-sig="0"><td class="name-cell">Aurora Innovation</td><td class="code-cell">usAUR</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>亏损</td><td>¥75亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+86.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+53.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+43.0%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.6%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="U" data-sig="2"><td class="name-cell">Lululemon</td><td class="code-cell">usLULU</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>9.5</td><td>¥137亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-39.5%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-32.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-14.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-0.5%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+340.2%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="U" data-sig="2"><td class="name-cell">Tempus AI</td><td class="code-cell">usTEM</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>亏损</td><td>¥46亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-20.8%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-12.2%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-11.2%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.5%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+104.3%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="U" data-sig="0"><td class="name-cell">Sigma Lithium</td><td class="code-cell">usSGML</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>37.6</td><td>¥10亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+14.0%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+4.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-27.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-25.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+24.5%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="U" data-sig="0"><td class="name-cell">奈飞</td><td class="code-cell">usNFLX</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>17.9</td><td>¥3679亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-6.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-8.7%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+134.1%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="U" data-sig="0"><td class="name-cell">Vir Biotech</td><td class="code-cell">usVIR</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>亏损</td><td>¥15亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+54.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-12.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+0.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+11.7%</span></span></td><td><span class="sig-none">--</span></td></tr>
-<tr data-mkt="U" data-sig="1"><td class="name-cell">直觉机器</td><td class="code-cell">usLUNR</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>亏损</td><td>¥58亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+171.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+167.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+68.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+36.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+45.5%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="U" data-sig="1"><td class="name-cell">Redwire</td><td class="code-cell">usRDW</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>亏损</td><td>¥35亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+183.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+137.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+131.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+77.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+22.2%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="U" data-sig="0"><td class="name-cell">Serve Robotics</td><td class="code-cell">usSERV</td><td><span class="mkt-badge mkt-U">🇺🇸 美股</span></td><td>亏损</td><td>¥7亿</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-13.2%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-9.8%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-8.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+18.6%</span></span></td><td><span class="sig-none">--</span></td></tr>
-</tbody></table>
-<div class="gtitle">杠杆 <span class="cnt">(2)</span></div>
-<table data-table-id="t3"><thead><tr><th onclick="sortT(0)">名称</th><th onclick="sortT(1)">代码</th><th onclick="sortT(2)">市场</th><th onclick="sortT(3)">PE</th><th onclick="sortT(4)">市值</th><th onclick="sortT(5)">60日</th><th onclick="sortT(6)">20日</th><th onclick="sortT(7)">10日</th><th onclick="sortT(8)">5日</th><th onclick="sortT(9)">今日</th><th onclick="sortT(10)">信号</th></tr></thead><tbody>
-<tr data-mkt="L" data-sig="2"><td class="name-cell">三倍做空半导体ETF</td><td class="code-cell">usSOXS</td><td><span class="mkt-badge mkt-U">🇺🇸 杠杆 3x</span></td><td>--</td><td>--</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-89.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-81.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-52.9%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-19.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+262.6%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-<tr data-mkt="L" data-sig="2"><td class="name-cell">三倍做空纳指ETF</td><td class="code-cell">usSQQQ</td><td><span class="mkt-badge mkt-U">🇺🇸 杠杆 3x</span></td><td>--</td><td>--</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-41.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-43.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-24.1%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-5.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+116.5%</span></span></td><td><span class="sig-sell">🔴 回撤</span></td></tr>
-</tbody></table>
-<div class="gtitle">指数 <span class="cnt">(2)</span></div>
-<table data-table-id="t4"><thead><tr><th onclick="sortT(0)">名称</th><th onclick="sortT(1)">代码</th><th onclick="sortT(2)">市场</th><th onclick="sortT(3)">PE</th><th onclick="sortT(4)">市值</th><th onclick="sortT(5)">60日</th><th onclick="sortT(6)">20日</th><th onclick="sortT(7)">10日</th><th onclick="sortT(8)">5日</th><th onclick="sortT(9)">今日</th><th onclick="sortT(10)">信号</th></tr></thead><tbody>
-<tr data-mkt="I" data-sig="1"><td class="name-cell">创业板50</td><td class="code-cell">sz399673</td><td><span class="mkt-badge mkt-I">🇨🇳 指数</span></td><td>--</td><td>¥7.8万亿</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+28.2%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+23.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+9.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+0.0%</span></span></td><td><span class="sig-buy">🟡 关注</span></td></tr>
-<tr data-mkt="I"><td class="name-cell">中韩半导体</td><td class="code-cell">931790</td><td><span class="mkt-badge mkt-H">港股</span></td><td colspan="8" class="no-data">数据暂不可用</td></tr>
-</tbody></table>
-<div class="gtitle">港股 <span class="cnt">(2)</span></div>
-<table data-table-id="t5"><thead><tr><th onclick="sortT(0)">名称</th><th onclick="sortT(1)">代码</th><th onclick="sortT(2)">市场</th><th onclick="sortT(3)">PE</th><th onclick="sortT(4)">市值</th><th onclick="sortT(5)">60日</th><th onclick="sortT(6)">20日</th><th onclick="sortT(7)">10日</th><th onclick="sortT(8)">5日</th><th onclick="sortT(9)">今日</th><th onclick="sortT(10)">信号</th></tr></thead><tbody>
-<tr data-mkt="H"><td class="name-cell">恒生科技ETF</td><td class="code-cell">HK3032</td><td><span class="mkt-badge mkt-H">港股</span></td><td colspan="8" class="no-data">数据暂不可用</td></tr>
-<tr data-mkt="H"><td class="name-cell">江南布衣</td><td class="code-cell">HK3306</td><td><span class="mkt-badge mkt-H">港股</span></td><td colspan="8" class="no-data">数据暂不可用</td></tr>
-</tbody></table>
+
+<div class="stock-panel" id="stock-0">
+<div class="stock-header">
+  <div>
+    <span class="name">东兴证券</span>
+    <span class="code">sh601198</span>
+    <span class="tag tag-hit">完全命中 ✓</span>
+  </div>
+  <div class="price-area">
+    <span class="price up">¥13.57</span>
+    <span class="change" style="color:#ef5350">+13.63%</span>
+  </div>
 </div>
-<div class="tab-content" id="tab1">
-<div class="summary"><div class="s-item"><span class="label">🇨🇳 A股完全命中</span><span class="value" style="color:#22ab94">2</span></div><div class="s-item"><span class="label">🇨🇳 A股近似候选</span><span class="value" style="color:#d6a64a">4</span></div><div class="s-item"><span class="label">候选池</span><span class="value" style="font-size:13px">3235只</span></div><div class="s-item"><span class="label">扫描量</span><span class="value" style="font-size:13px">320只</span></div><div class="s-item"><span class="label">更新时间</span><span class="value" style="font-size:13px">2026-05-26</span></div></div><div class="gtitle">🇨🇳 A股超跌反弹筛选 <span class="cnt">(6)</span></div><table data-table-id="ts_A"><thead><tr><th onclick="sortS(0)">名称</th><th onclick="sortS(1)">代码</th><th onclick="sortS(2)">PE</th><th onclick="sortS(3)">最新价</th><th onclick="sortS(4)">今日</th><th onclick="sortS(5)">60日</th><th onclick="sortS(6)">20日</th><th onclick="sortS(7)">10日</th><th onclick="sortS(8)">5日</th><th onclick="sortS(9)">状态</th></tr></thead><tbody><tr class="hit"><td class="name-cell">东兴证券</td><td class="code-cell">sh601198</td><td>21.1</td><td style="color:#fff;font-weight:600">13.57</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.2%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-4.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+5.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.5%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+0.7%</span></span></td><td><span class="trend-tag hit">完全命中</span> <span style="font-size:10px;color:#787b86;margin-left:4px">wk0:R wk1:R rise:Y bear:3/4</span></td></tr>
-<tr class="approx"><td class="name-cell">世华科技</td><td class="code-cell">sh688093</td><td>24.1</td><td style="color:#fff;font-weight:600">34.14</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.8%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-7.0%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+6.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.6%</span></span></td><td><span class="trend-tag approx">近似候选</span> <span style="font-size:10px;color:#787b86;margin-left:4px">wk0:R wk1:G rise:Y bear:2/4</span></td></tr>
-<tr class="approx"><td class="name-cell">贵研铂业</td><td class="code-cell">sh600459</td><td>27.1</td><td style="color:#fff;font-weight:600">21.69</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.5%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-8.7%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+0.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.8%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+8.6%</span></span></td><td><span class="trend-tag approx">近似候选</span> <span style="font-size:10px;color:#787b86;margin-left:4px">wk0:R wk1:R rise:Y bear:2/4</span></td></tr>
-<tr class="hit"><td class="name-cell">移远通信</td><td class="code-cell">sh603236</td><td>29.0</td><td style="color:#fff;font-weight:600">77.30</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+0.7%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-9.0%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-9.1%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+4.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.8%</span></span></td><td><span class="trend-tag hit">完全命中</span> <span style="font-size:10px;color:#787b86;margin-left:4px">wk0:R wk1:R rise:Y bear:3/4</span></td></tr>
-<tr class="approx"><td class="name-cell">顶点软件</td><td class="code-cell">sh603383</td><td>34.4</td><td style="color:#fff;font-weight:600">34.04</td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+3.4%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-5.3%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.9%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+2.6%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+0.0%</span></span></td><td><span class="trend-tag approx">近似候选</span> <span style="font-size:10px;color:#787b86;margin-left:4px">wk0:R wk1:R rise:Y bear:2/4</span></td></tr>
-<tr class="approx"><td class="name-cell">紫燕食品</td><td class="code-cell">sh603057</td><td>36.1</td><td style="color:#fff;font-weight:600">26.66</td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.3%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-17.2%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-1.4%</span></span></td><td><span class="chg-bar" style="background:#1a3a2a"><span style="color:#ef5350">+1.5%</span></span></td><td><span class="chg-bar" style="background:#2a1515"><span style="color:#26a69a">-3.5%</span></span></td><td><span class="trend-tag approx">近似候选</span> <span style="font-size:10px;color:#787b86;margin-left:4px">wk0:R wk1:G rise:N bear:1/4</span></td></tr>
-</tbody></table>
+<div class="metrics">
+  <div class="metric"><div class="val">2.2</div><div class="lbl">PE(TTM)</div></div>
+  <div class="metric"><div class="val">20.87</div><div class="lbl">PB</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+9.95%</div><div class="lbl">5日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+0.74%</div><div class="lbl">10日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#26a69a">5.69%</div><div class="lbl">60日涨跌</div></div>
+  <div class="metric"><div class="val">1</div><div class="lbl">总市值</div></div>
+  <div class="metric"><div class="val">17.36%</div><div class="lbl">股息率</div></div>
+</div>
+<div class="annotation-bar">
+  <div class="ann-item"><span class="dot red"></span>前期高点: ¥14.01 (2026-02-26) 跌12.1%</div>
+  <div class="ann-item"><span class="dot green"></span>最低点: ¥12.32 (2026-03-31) 反弹10.1%</div>
+  <div class="ann-item"><span class="dot orange"></span>当前: ¥13.57 距高点-3.1%</div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-day" id="chart-day-0"></div>
+  <div class="chart-week" id="chart-week-0"></div>
 </div>
 </div>
-<div class="footer">
-  全市场策略监控 | 数据: westock-data | 生成: 2026-05-26 | <a href="https://zbdba.github.io/stock-screener/" style="color:#5b9bd5">GitHub Pages</a>
+
+<div class="stock-panel" id="stock-1">
+<div class="stock-header">
+  <div>
+    <span class="name">世华科技</span>
+    <span class="code">sh688093</span>
+    <span class="tag tag-miss">弱反弹 △</span>
+  </div>
+  <div class="price-area">
+    <span class="price up">¥34.14</span>
+    <span class="change" style="color:#ef5350">+34.82%</span>
+  </div>
 </div>
+<div class="metrics">
+  <div class="metric"><div class="val">3.6</div><div class="lbl">PE(TTM)</div></div>
+  <div class="metric"><div class="val">24.00</div><div class="lbl">PB</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+24.75%</div><div class="lbl">5日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+3.61%</div><div class="lbl">10日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#26a69a">6.89%</div><div class="lbl">60日涨跌</div></div>
+  <div class="metric"><div class="val">1</div><div class="lbl">总市值</div></div>
+  <div class="metric"><div class="val">19.36%</div><div class="lbl">股息率</div></div>
+</div>
+<div class="annotation-bar">
+  <div class="ann-item"><span class="dot red"></span>前期高点: ¥38.35 (2026-02-26) 跌22.8%</div>
+  <div class="ann-item"><span class="dot green"></span>最低点: ¥29.61 (2026-03-23) 反弹15.3%</div>
+  <div class="ann-item"><span class="dot orange"></span>当前: ¥34.14 距高点-11.0%</div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-day" id="chart-day-1"></div>
+  <div class="chart-week" id="chart-week-1"></div>
+</div>
+</div>
+
+<div class="stock-panel" id="stock-2">
+<div class="stock-header">
+  <div>
+    <span class="name">贵研铂业</span>
+    <span class="code">sh600459</span>
+    <span class="tag tag-near">近似命中 ~</span>
+  </div>
+  <div class="price-area">
+    <span class="price up">¥21.69</span>
+    <span class="change" style="color:#ef5350">+22.11%</span>
+  </div>
+</div>
+<div class="metrics">
+  <div class="metric"><div class="val">4.6</div><div class="lbl">PE(TTM)</div></div>
+  <div class="metric"><div class="val">27.88</div><div class="lbl">PB</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+13.76%</div><div class="lbl">5日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+8.56%</div><div class="lbl">10日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#26a69a">0.88%</div><div class="lbl">60日涨跌</div></div>
+  <div class="metric"><div class="val">1</div><div class="lbl">总市值</div></div>
+  <div class="metric"><div class="val">-4.89%</div><div class="lbl">股息率</div></div>
+</div>
+<div class="annotation-bar">
+  <div class="ann-item"><span class="dot red"></span>前期高点: ¥26.27 (2026-03-02) 跌30.8%</div>
+  <div class="ann-item"><span class="dot green"></span>最低点: ¥18.18 (2026-03-23) 反弹19.3%</div>
+  <div class="ann-item"><span class="dot orange"></span>当前: ¥21.69 距高点-17.4%</div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-day" id="chart-day-2"></div>
+  <div class="chart-week" id="chart-week-2"></div>
+</div>
+</div>
+
+<div class="stock-panel" id="stock-3">
+<div class="stock-header">
+  <div>
+    <span class="name">移远通信</span>
+    <span class="code">sh603236</span>
+    <span class="tag tag-hit">完全命中 ✓</span>
+  </div>
+  <div class="price-area">
+    <span class="price up">¥77.30</span>
+    <span class="change" style="color:#ef5350">+77.43%</span>
+  </div>
+</div>
+<div class="metrics">
+  <div class="metric"><div class="val">4.4</div><div class="lbl">PE(TTM)</div></div>
+  <div class="metric"><div class="val">26.58</div><div class="lbl">PB</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+69.41%</div><div class="lbl">5日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+1.79%</div><div class="lbl">10日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#26a69a">-9.09%</div><div class="lbl">60日涨跌</div></div>
+  <div class="metric"><div class="val">1</div><div class="lbl">总市值</div></div>
+  <div class="metric"><div class="val">-48.72%</div><div class="lbl">股息率</div></div>
+</div>
+<div class="annotation-bar">
+  <div class="ann-item"><span class="dot red"></span>前期高点: ¥86.95 (2026-02-26) 跌16.8%</div>
+  <div class="ann-item"><span class="dot green"></span>最低点: ¥72.30 (2026-04-30) 反弹6.9%</div>
+  <div class="ann-item"><span class="dot orange"></span>当前: ¥77.30 距高点-11.1%</div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-day" id="chart-day-3"></div>
+  <div class="chart-week" id="chart-week-3"></div>
+</div>
+</div>
+
+<div class="stock-panel" id="stock-4">
+<div class="stock-header">
+  <div>
+    <span class="name">顶点软件</span>
+    <span class="code">sh603383</span>
+    <span class="tag tag-near">近似命中 ~</span>
+  </div>
+  <div class="price-area">
+    <span class="price up">¥34.04</span>
+    <span class="change" style="color:#ef5350">+34.34%</span>
+  </div>
+</div>
+<div class="metrics">
+  <div class="metric"><div class="val">6.0</div><div class="lbl">PE(TTM)</div></div>
+  <div class="metric"><div class="val">39.23</div><div class="lbl">PB</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+27.76%</div><div class="lbl">5日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+0.00%</div><div class="lbl">10日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#26a69a">1.89%</div><div class="lbl">60日涨跌</div></div>
+  <div class="metric"><div class="val">2</div><div class="lbl">总市值</div></div>
+  <div class="metric"><div class="val">32.26%</div><div class="lbl">股息率</div></div>
+</div>
+<div class="annotation-bar">
+  <div class="ann-item"><span class="dot red"></span>前期高点: ¥36.12 (2026-02-27) 跌22.8%</div>
+  <div class="ann-item"><span class="dot green"></span>最低点: ¥27.90 (2026-04-03) 反弹22.0%</div>
+  <div class="ann-item"><span class="dot orange"></span>当前: ¥34.04 距高点-5.8%</div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-day" id="chart-day-4"></div>
+  <div class="chart-week" id="chart-week-4"></div>
+</div>
+</div>
+
+<div class="stock-panel" id="stock-5">
+<div class="stock-header">
+  <div>
+    <span class="name">紫燕食品</span>
+    <span class="code">sh603057</span>
+    <span class="tag tag-miss">趋势未确认 ✗</span>
+  </div>
+  <div class="price-area">
+    <span class="price up">¥26.66</span>
+    <span class="change" style="color:#ef5350">+27.49%</span>
+  </div>
+</div>
+<div class="metrics">
+  <div class="metric"><div class="val">4.3</div><div class="lbl">PE(TTM)</div></div>
+  <div class="metric"><div class="val">46.51</div><div class="lbl">PB</div></div>
+  <div class="metric"><div class="val" style="color:#ef5350">+17.01%</div><div class="lbl">5日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#26a69a">-3.55%</div><div class="lbl">10日涨跌</div></div>
+  <div class="metric"><div class="val" style="color:#26a69a">-1.44%</div><div class="lbl">60日涨跌</div></div>
+  <div class="metric"><div class="val">0</div><div class="lbl">总市值</div></div>
+  <div class="metric"><div class="val">44.84%</div><div class="lbl">股息率</div></div>
+</div>
+<div class="annotation-bar">
+  <div class="ann-item"><span class="dot red"></span>前期高点: ¥34.47 (2026-03-05) 跌31.1%</div>
+  <div class="ann-item"><span class="dot green"></span>最低点: ¥23.76 (2026-03-23) 反弹12.2%</div>
+  <div class="ann-item"><span class="dot orange"></span>当前: ¥26.66 距高点-22.7%</div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-day" id="chart-day-5"></div>
+  <div class="chart-week" id="chart-week-5"></div>
+</div>
+</div>
+</div>
+<div class="footer">A股超跌反弹筛选器 | 数据来源: westock-data | 基于陆股通全量3235只股票 | 生成时间: 2026-05-26</div>
 <script>
-var sortSt={};
-function parseVT(td,col){
-  var t=td.textContent.trim();
-  if(col===3){ var v=parseFloat(t);return isNaN(v)?99999:v; }
-  if(col===4){ if(t.includes('万亿'))return parseFloat(t)*1e12;if(t.includes('亿'))return parseFloat(t)*1e8;if(t.includes('M'))return parseFloat(t)*1e6;return 0; }
-  if(col>=5&&col<=9){ var v=parseFloat(t);return isNaN(v)?0:v; }
-  if(col===10){ if(t.includes('回踩'))return 1;if(t.includes('关注'))return 2;if(t.includes('回撤'))return 3;return 99; }
-  return t;
+const COLOR_UP = "#ef5350";
+const COLOR_DOWN = "#26a69a";
+const BG_COLOR = "#1a1d2e";
+const TEXT_COLOR = "#787b86";
+const BORDER_COLOR = "#2a2e42";
+
+// === Stock 0: 东兴证券 (sh601198) ===
+const dayData_0 = [
+["2026-02-26", 14.24, 14.01, 13.99, 14.25, 225118],
+["2026-02-27", 14.06, 13.96, 13.91, 14.06, 225847],
+["2026-03-02", 13.87, 13.96, 13.83, 14.03, 303277],
+["2026-03-03", 13.9, 13.82, 13.8, 14.06, 347694],
+["2026-03-04", 13.76, 13.52, 13.47, 13.82, 359341],
+["2026-03-05", 13.62, 13.49, 13.42, 13.65, 193308],
+["2026-03-06", 13.47, 13.58, 13.45, 13.65, 165732],
+["2026-03-09", 13.46, 13.43, 13.31, 13.53, 201895],
+["2026-03-10", 13.5, 13.52, 13.46, 13.65, 132226],
+["2026-03-11", 13.51, 13.56, 13.49, 13.62, 129982],
+["2026-03-12", 13.58, 13.49, 13.43, 13.6, 129537],
+["2026-03-13", 13.5, 13.54, 13.44, 13.73, 219020],
+["2026-03-16", 13.48, 13.33, 13.26, 13.49, 284066],
+["2026-03-17", 13.36, 13.31, 13.31, 13.56, 231875],
+["2026-03-18", 13.31, 13.36, 13.25, 13.4, 141192],
+["2026-03-19", 13.3, 13.31, 13.27, 13.39, 199601],
+["2026-03-20", 13.31, 13.14, 13.14, 13.35, 184161],
+["2026-03-23", 13.11, 12.44, 12.35, 13.18, 459830],
+["2026-03-24", 12.57, 12.59, 12.44, 12.65, 260357],
+["2026-03-25", 12.6, 12.72, 12.6, 12.82, 171309],
+["2026-03-26", 12.7, 12.46, 12.39, 12.75, 186193],
+["2026-03-27", 12.38, 12.57, 12.34, 12.61, 166585],
+["2026-03-30", 12.39, 12.41, 12.23, 12.47, 226016],
+["2026-03-31", 12.45, 12.32, 12.32, 12.58, 193538],
+["2026-04-01", 12.48, 12.49, 12.39, 12.54, 181085],
+["2026-04-02", 12.49, 12.44, 12.33, 12.5, 140130],
+["2026-04-03", 12.4, 12.48, 12.4, 12.61, 180262],
+["2026-04-07", 12.4, 12.39, 12.37, 12.59, 143013],
+["2026-04-08", 12.53, 12.75, 12.53, 12.81, 254352],
+["2026-04-09", 12.66, 12.53, 12.46, 12.66, 160414],
+["2026-04-10", 12.64, 12.81, 12.62, 13.03, 310705],
+["2026-04-13", 12.73, 12.86, 12.73, 12.95, 176261],
+["2026-04-14", 13.0, 13.08, 12.78, 13.1, 229796],
+["2026-04-15", 13.08, 12.87, 12.87, 13.1, 176986],
+["2026-04-16", 13.0, 13.01, 12.9, 13.05, 153264],
+["2026-04-17", 12.95, 12.96, 12.93, 13.04, 104114],
+["2026-04-20", 13.05, 12.92, 12.91, 13.08, 105619],
+["2026-04-21", 12.92, 12.88, 12.84, 12.99, 128438],
+["2026-04-22", 12.88, 12.89, 12.84, 12.98, 165809],
+["2026-04-23", 12.88, 12.84, 12.82, 12.96, 152470],
+["2026-04-24", 12.84, 12.71, 12.67, 12.85, 136448],
+["2026-04-27", 12.7, 12.73, 12.68, 12.89, 150065],
+["2026-04-28", 12.73, 12.94, 12.73, 13.05, 202749],
+["2026-04-29", 12.94, 13.09, 12.9, 13.09, 164005],
+["2026-04-30", 13.01, 13.2, 12.95, 13.27, 227883],
+["2026-05-06", 13.24, 13.39, 13.18, 13.41, 235507],
+["2026-05-07", 13.49, 13.24, 13.2, 13.49, 166758],
+["2026-05-08", 13.21, 13.19, 13.16, 13.31, 119148],
+["2026-05-11", 13.15, 13.25, 13.06, 13.34, 192680],
+["2026-05-12", 13.25, 13.24, 13.16, 13.35, 153567],
+["2026-05-13", 13.22, 13.25, 13.14, 13.29, 137507],
+["2026-05-14", 13.28, 12.98, 12.98, 13.3, 146099],
+["2026-05-15", 12.98, 12.72, 12.65, 13.04, 230349],
+["2026-05-18", 12.71, 12.8, 12.67, 12.81, 167963],
+["2026-05-19", 13.28, 13.47, 13.18, 13.6, 763337],
+["2026-05-20", 13.4, 13.6, 13.4, 13.78, 439356],
+["2026-05-21", 13.57, 13.5, 13.5, 13.88, 481913],
+["2026-05-22", 13.54, 13.33, 13.28, 13.6, 255172],
+["2026-05-25", 13.32, 13.41, 13.23, 13.45, 199034],
+["2026-05-26", 13.36, 13.57, 13.34, 13.63, 237837]
+];
+const weekData_0 = [
+["2025-04-03", 11.52, 11.39, 11.26, 11.61, 1093701],
+["2025-04-11", 10.73, 10.19, 9.63, 10.83, 2861904],
+["2025-04-18", 10.28, 10.12, 9.94, 10.41, 1375917],
+["2025-04-25", 10.1, 10.26, 10.06, 10.35, 1240822],
+["2025-04-30", 10.26, 9.88, 9.78, 10.26, 817484],
+["2025-05-09", 9.92, 10.25, 9.92, 10.79, 2011638],
+["2025-05-16", 10.33, 10.33, 10.21, 10.8, 1977046],
+["2025-05-23", 10.38, 10.01, 9.99, 10.39, 976459],
+["2025-05-30", 9.98, 10.05, 9.95, 10.15, 755489],
+["2025-06-06", 9.96, 10.22, 9.95, 10.38, 892344],
+["2025-06-13", 10.64, 10.65, 10.38, 11.19, 3801888],
+["2025-06-20", 10.61, 10.34, 10.33, 10.88, 1436283],
+["2025-06-27", 10.27, 11.0, 10.26, 11.31, 2863250],
+["2025-07-04", 11.02, 10.9, 10.87, 11.12, 1466483],
+["2025-07-11", 10.87, 11.34, 10.85, 11.52, 1952122],
+["2025-07-18", 11.36, 11.08, 10.99, 11.36, 1407797],
+["2025-07-25", 11.07, 11.45, 11.06, 11.59, 2275013],
+["2025-08-01", 11.45, 10.97, 10.91, 11.62, 1942007],
+["2025-08-08", 10.93, 11.28, 10.86, 11.65, 1966395],
+["2025-08-15", 11.26, 11.75, 11.25, 11.85, 2727425],
+["2025-08-22", 11.86, 12.46, 11.59, 12.54, 4173503],
+["2025-08-29", 12.58, 12.13, 11.87, 12.62, 3529090],
+["2025-09-05", 12.17, 11.58, 11.35, 12.19, 2040904],
+["2025-09-12", 11.55, 11.67, 11.44, 11.84, 1484436],
+["2025-09-19", 11.67, 11.32, 11.27, 11.87, 1641598],
+["2025-09-26", 11.32, 11.2, 11.1, 11.44, 1122212],
+["2025-09-30", 11.2, 11.51, 11.2, 11.77, 817318],
+["2025-10-10", 11.48, 11.72, 11.4, 11.85, 722303],
+["2025-10-17", 11.5, 12.04, 11.43, 12.45, 2596215],
+["2025-10-24", 12.15, 11.95, 11.69, 12.26, 2023064],
+["2025-10-31", 12.1, 12.67, 12.1, 13.46, 5496003],
+["2025-11-07", 12.6, 12.58, 12.33, 12.87, 2153683],
+["2025-11-14", 12.53, 12.94, 12.41, 13.35, 3079815],
+["2025-11-21", 12.82, 13.13, 0.0, 13.6, 2024126],
+["2025-11-28", 0.0, 13.13, 0.0, 0.0, 0],
+["2025-12-05", 0.0, 13.13, 0.0, 0.0, 0],
+["2025-12-12", 0.0, 13.13, 0.0, 0.0, 0],
+["2025-12-19", 0.0, 14.39, 0.0, 14.69, 2274961],
+["2025-12-26", 14.58, 14.4, 13.86, 14.72, 3862138],
+["2025-12-31", 14.35, 13.88, 13.88, 14.38, 1191891],
+["2026-01-09", 13.93, 13.89, 13.77, 14.4, 2851561],
+["2026-01-16", 13.91, 13.63, 13.62, 14.21, 2727918],
+["2026-01-23", 13.63, 13.9, 13.58, 13.94, 1159306],
+["2026-01-30", 13.89, 13.9, 13.75, 14.09, 1487876],
+["2026-02-06", 13.83, 14.16, 13.6, 14.25, 1734885],
+["2026-02-13", 14.23, 14.16, 14.16, 14.65, 1609680],
+["2026-02-27", 14.23, 13.96, 13.91, 14.38, 898544],
+["2026-03-06", 13.87, 13.58, 13.42, 14.06, 1369352],
+["2026-03-13", 13.46, 13.54, 13.31, 13.73, 812660],
+["2026-03-20", 13.48, 13.14, 13.14, 13.56, 1040895],
+["2026-03-27", 13.11, 12.57, 12.34, 13.18, 1244274],
+["2026-04-03", 12.39, 12.48, 12.23, 12.61, 921031],
+["2026-04-10", 12.4, 12.81, 12.37, 13.03, 868484],
+["2026-04-17", 12.73, 12.96, 12.73, 13.1, 840421],
+["2026-04-24", 13.05, 12.71, 12.67, 13.08, 688784],
+["2026-04-30", 12.7, 13.2, 12.68, 13.27, 744702],
+["2026-05-08", 13.24, 13.19, 13.16, 13.49, 521413],
+["2026-05-15", 13.15, 12.72, 12.65, 13.35, 860202],
+["2026-05-22", 12.71, 13.33, 12.67, 13.88, 2107741],
+["2026-05-26", 13.32, 13.57, 13.23, 13.63, 436871]
+];
+
+// === Stock 1: 世华科技 (sh688093) ===
+const dayData_1 = [
+["2026-02-26", 36.8, 38.35, 36.63, 38.6, 3650480],
+["2026-02-27", 37.92, 37.96, 37.41, 38.09, 2481251],
+["2026-03-02", 37.1, 37.3, 36.8, 38.3, 3993189],
+["2026-03-03", 37.13, 35.78, 35.53, 38.2, 3929916],
+["2026-03-04", 35.78, 34.86, 34.6, 36.14, 2725324],
+["2026-03-05", 35.5, 34.62, 34.21, 35.91, 2669272],
+["2026-03-06", 34.7, 34.95, 34.5, 35.22, 1457410],
+["2026-03-09", 34.4, 33.59, 32.93, 34.4, 3195221],
+["2026-03-10", 33.97, 34.91, 33.91, 34.98, 1946749],
+["2026-03-11", 34.96, 34.65, 34.51, 35.55, 1678694],
+["2026-03-12", 34.52, 34.2, 33.83, 34.79, 1885717],
+["2026-03-13", 34.2, 33.93, 33.82, 34.43, 1416820],
+["2026-03-16", 33.99, 33.95, 33.48, 34.05, 1378362],
+["2026-03-17", 34.19, 33.35, 33.35, 34.19, 1319648],
+["2026-03-18", 33.34, 33.4, 33.01, 33.6, 1154021],
+["2026-03-19", 32.95, 31.54, 31.33, 33.18, 3762244],
+["2026-03-20", 31.74, 31.2, 31.2, 32.16, 1811476],
+["2026-03-23", 30.53, 29.61, 29.1, 30.87, 2699690],
+["2026-03-24", 30.27, 30.43, 29.69, 30.45, 2163808],
+["2026-03-25", 30.57, 31.31, 30.57, 31.51, 1566575],
+["2026-03-26", 31.28, 30.69, 30.55, 31.53, 1658414],
+["2026-03-27", 30.46, 30.76, 30.21, 31.24, 1423564],
+["2026-03-30", 30.13, 31.0, 30.13, 31.18, 1619864],
+["2026-03-31", 30.87, 30.4, 30.36, 31.35, 2099577],
+["2026-04-01", 31.16, 31.21, 30.8, 31.45, 2277866],
+["2026-04-02", 31.18, 30.52, 30.4, 31.29, 1082827],
+["2026-04-03", 30.51, 30.9, 30.51, 31.45, 1100106],
+["2026-04-07", 31.02, 31.0, 30.9, 31.69, 1630834],
+["2026-04-08", 31.9, 33.54, 31.9, 33.6, 3357022],
+["2026-04-09", 33.16, 33.67, 32.81, 34.11, 3147367],
+["2026-04-10", 33.88, 33.89, 33.6, 34.36, 2886681],
+["2026-04-13", 33.55, 33.54, 33.28, 34.09, 1982868],
+["2026-04-14", 34.06, 34.01, 33.73, 34.39, 2587625],
+["2026-04-15", 34.3, 33.67, 33.57, 34.4, 2165136],
+["2026-04-16", 33.67, 34.1, 33.55, 34.19, 1765570],
+["2026-04-17", 34.2, 33.95, 33.58, 34.23, 2259771],
+["2026-04-20", 31.9, 32.18, 30.88, 32.58, 7664930],
+["2026-04-21", 31.93, 32.7, 31.38, 33.06, 3365194],
+["2026-04-22", 32.47, 33.22, 32.47, 33.48, 2530281],
+["2026-04-23", 33.2, 31.94, 31.68, 33.37, 3607708],
+["2026-04-24", 31.77, 31.37, 31.3, 32.22, 2396848],
+["2026-04-27", 31.6, 31.78, 31.49, 32.14, 2049382],
+["2026-04-28", 31.68, 31.09, 30.82, 31.86, 2400972],
+["2026-04-29", 31.12, 31.75, 30.78, 32.23, 2965275],
+["2026-04-30", 31.5, 32.5, 31.5, 32.81, 3521819],
+["2026-05-06", 32.71, 32.49, 32.31, 33.01, 3670792],
+["2026-05-07", 32.72, 32.45, 32.37, 32.79, 2839913],
+["2026-05-08", 32.59, 32.51, 32.18, 33.17, 2618912],
+["2026-05-11", 32.51, 32.44, 32.25, 32.8, 3172509],
+["2026-05-12", 32.49, 31.51, 31.42, 32.49, 3179339],
+["2026-05-13", 31.46, 33.22, 31.27, 33.84, 4120647],
+["2026-05-14", 33.63, 33.68, 32.62, 34.25, 4736283],
+["2026-05-15", 33.63, 32.92, 32.71, 33.76, 3859274],
+["2026-05-18", 33.12, 32.69, 32.3, 33.28, 2789919],
+["2026-05-19", 32.91, 32.95, 32.22, 33.33, 2824435],
+["2026-05-20", 32.66, 33.42, 32.53, 33.49, 2994646],
+["2026-05-21", 33.6, 31.63, 31.42, 34.0, 4010753],
+["2026-05-22", 31.86, 32.81, 31.86, 33.09, 3446038],
+["2026-05-25", 33.01, 34.75, 32.82, 35.85, 6435268],
+["2026-05-26", 34.65, 34.14, 33.55, 34.82, 4294579]
+];
+const weekData_1 = [
+["2025-04-03", 22.68, 22.73, 22.26, 24.52, 12368429],
+["2025-04-11", 21.08, 20.26, 16.44, 21.12, 21899673],
+["2025-04-18", 21.16, 24.98, 19.94, 24.98, 22372079],
+["2025-04-25", 24.94, 25.54, 23.66, 26.2, 35250705],
+["2025-04-30", 25.6, 26.16, 25.6, 26.8, 11613067],
+["2025-05-09", 26.3, 25.95, 25.48, 28.16, 21541360],
+["2025-05-16", 26.45, 25.4, 25.35, 26.9, 15918094],
+["2025-05-23", 25.42, 25.19, 25.0, 26.37, 13047173],
+["2025-05-30", 25.16, 25.25, 24.75, 25.58, 9271646],
+["2025-06-06", 25.08, 26.45, 25.08, 27.3, 14442248],
+["2025-06-13", 26.45, 26.19, 25.51, 26.67, 10028116],
+["2025-06-20", 25.9, 28.51, 25.85, 29.6, 18998006],
+["2025-06-27", 29.0, 28.9, 28.05, 29.99, 18763295],
+["2025-07-04", 28.88, 30.48, 28.88, 32.88, 26346948],
+["2025-07-11", 30.48, 30.06, 29.69, 31.78, 15850811],
+["2025-07-18", 30.06, 29.76, 29.41, 31.09, 15731855],
+["2025-07-25", 29.6, 31.73, 29.6, 32.05, 15593729],
+["2025-08-01", 31.76, 32.27, 31.26, 33.47, 17691040],
+["2025-08-08", 32.27, 36.5, 32.0, 37.68, 19417402],
+["2025-08-15", 36.57, 36.11, 35.22, 39.82, 30270711],
+["2025-08-22", 35.96, 38.9, 35.48, 39.2, 24127213],
+["2025-08-29", 41.3, 40.85, 39.16, 45.07, 37375162],
+["2025-09-05", 40.87, 38.35, 36.51, 41.6, 28397013],
+["2025-09-12", 38.35, 39.47, 37.37, 39.75, 17188576],
+["2025-09-19", 39.6, 41.81, 38.05, 43.35, 26615433],
+["2025-09-26", 41.73, 39.56, 39.25, 42.7, 19733783],
+["2025-09-30", 39.4, 39.49, 39.13, 40.09, 5111108],
+["2025-10-10", 39.48, 37.91, 37.61, 40.43, 7313202],
+["2025-10-17", 36.26, 35.1, 35.04, 38.19, 14854622],
+["2025-10-24", 35.75, 38.1, 35.26, 38.24, 10731903],
+["2025-10-31", 38.6, 39.1, 38.11, 44.31, 38987666],
+["2025-11-07", 38.8, 36.35, 35.63, 38.83, 16937685],
+["2025-11-14", 36.6, 35.3, 35.3, 36.65, 9088273],
+["2025-11-21", 35.05, 32.8, 32.8, 35.19, 7964319],
+["2025-11-28", 33.15, 34.5, 32.8, 34.86, 6636364],
+["2025-12-05", 34.74, 34.77, 33.94, 35.35, 6233004],
+["2025-12-12", 34.7, 34.99, 34.4, 36.04, 8563343],
+["2025-12-19", 34.99, 34.9, 33.91, 35.35, 6976505],
+["2025-12-26", 34.9, 37.21, 34.9, 37.72, 11777915],
+["2025-12-31", 37.12, 36.85, 36.37, 37.44, 4644883],
+["2026-01-09", 36.89, 37.89, 36.82, 38.35, 12790965],
+["2026-01-16", 38.02, 38.36, 36.38, 38.79, 14541005],
+["2026-01-23", 38.38, 39.88, 37.96, 40.28, 14294380],
+["2026-01-30", 40.19, 38.62, 35.6, 40.2, 18120972],
+["2026-02-06", 37.6, 34.39, 33.66, 37.6, 16538866],
+["2026-02-13", 34.61, 35.62, 34.61, 36.29, 8437406],
+["2026-02-27", 36.29, 37.96, 35.33, 38.6, 10021535],
+["2026-03-06", 37.1, 34.95, 34.21, 38.3, 14775111],
+["2026-03-13", 34.4, 33.93, 32.93, 35.55, 10123201],
+["2026-03-20", 33.99, 31.2, 31.2, 34.19, 9425751],
+["2026-03-27", 30.53, 30.76, 29.1, 31.53, 9512051],
+["2026-04-03", 30.13, 30.9, 30.13, 31.45, 8180240],
+["2026-04-10", 31.02, 33.89, 30.9, 34.36, 11021904],
+["2026-04-17", 33.55, 33.95, 33.28, 34.4, 10760970],
+["2026-04-24", 31.9, 31.37, 30.88, 33.48, 19564961],
+["2026-04-30", 31.6, 32.5, 30.78, 32.81, 10937448],
+["2026-05-08", 32.71, 32.51, 32.18, 33.17, 9129617],
+["2026-05-15", 32.51, 32.92, 31.27, 34.25, 19068052],
+["2026-05-22", 33.12, 32.81, 31.42, 34.0, 16065791],
+["2026-05-26", 33.01, 34.14, 32.82, 35.85, 10729847]
+];
+
+// === Stock 2: 贵研铂业 (sh600459) ===
+const dayData_2 = [
+["2026-02-26", 24.01, 23.5, 23.46, 24.3, 399699],
+["2026-02-27", 23.45, 25.85, 23.45, 25.85, 722378],
+["2026-03-02", 26.76, 26.27, 24.61, 26.76, 908221],
+["2026-03-03", 25.4, 23.78, 23.71, 25.45, 610901],
+["2026-03-04", 23.23, 23.65, 23.05, 24.35, 385562],
+["2026-03-05", 24.01, 23.44, 23.14, 24.3, 298471],
+["2026-03-06", 23.0, 23.14, 22.73, 23.47, 219657],
+["2026-03-09", 22.25, 22.98, 21.63, 23.0, 298467],
+["2026-03-10", 23.23, 23.0, 22.8, 23.33, 212717],
+["2026-03-11", 23.0, 22.57, 22.45, 23.13, 201146],
+["2026-03-12", 22.31, 22.02, 21.85, 22.47, 213465],
+["2026-03-13", 22.02, 21.45, 21.35, 22.35, 227309],
+["2026-03-16", 21.31, 20.72, 20.3, 21.37, 302159],
+["2026-03-17", 20.87, 20.68, 20.63, 21.23, 215205],
+["2026-03-18", 20.69, 20.62, 20.27, 20.77, 156382],
+["2026-03-19", 19.88, 19.84, 19.62, 20.33, 279396],
+["2026-03-20", 19.82, 19.65, 19.62, 20.35, 203554],
+["2026-03-23", 19.0, 18.18, 18.04, 19.27, 308064],
+["2026-03-24", 18.75, 18.71, 18.16, 18.8, 186239],
+["2026-03-25", 19.24, 19.15, 19.0, 19.48, 222781],
+["2026-03-26", 19.0, 18.77, 18.63, 19.33, 151033],
+["2026-03-27", 18.39, 19.39, 18.39, 19.53, 210032],
+["2026-03-30", 19.3, 19.57, 19.08, 19.57, 176585],
+["2026-03-31", 19.58, 19.5, 19.43, 20.14, 186475],
+["2026-04-01", 19.95, 19.8, 19.56, 20.02, 151612],
+["2026-04-02", 19.6, 19.28, 19.08, 19.71, 142316],
+["2026-04-03", 19.4, 19.13, 19.13, 19.51, 95422],
+["2026-04-07", 19.14, 19.17, 19.03, 19.29, 88888],
+["2026-04-08", 19.79, 20.42, 19.61, 20.49, 235782],
+["2026-04-09", 20.08, 20.16, 19.91, 20.44, 127646],
+["2026-04-10", 20.4, 20.34, 20.22, 20.55, 120809],
+["2026-04-13", 20.08, 20.34, 20.08, 20.51, 106341],
+["2026-04-14", 20.58, 20.57, 20.34, 20.75, 140246],
+["2026-04-15", 20.85, 20.6, 20.55, 21.06, 167943],
+["2026-04-16", 20.74, 21.05, 20.63, 21.12, 152879],
+["2026-04-17", 20.81, 21.18, 20.81, 21.29, 145108],
+["2026-04-20", 21.15, 21.55, 21.14, 21.66, 176896],
+["2026-04-21", 21.52, 22.04, 20.97, 22.47, 295396],
+["2026-04-22", 22.19, 22.45, 22.05, 22.6, 272070],
+["2026-04-23", 22.45, 21.5, 21.45, 22.55, 265354],
+["2026-04-24", 21.16, 21.32, 21.08, 21.65, 154001],
+["2026-04-27", 21.32, 20.81, 20.77, 21.54, 157036],
+["2026-04-28", 20.72, 20.04, 19.91, 20.74, 181750],
+["2026-04-29", 19.93, 20.51, 19.9, 20.74, 174493],
+["2026-04-30", 20.2, 20.09, 19.93, 20.53, 164087],
+["2026-05-06", 20.11, 20.7, 20.11, 20.77, 245411],
+["2026-05-07", 20.98, 21.31, 20.84, 21.33, 230088],
+["2026-05-08", 21.2, 21.35, 20.97, 21.56, 201773],
+["2026-05-11", 21.35, 21.48, 21.25, 21.85, 231017],
+["2026-05-12", 21.77, 21.09, 20.99, 21.9, 202512],
+["2026-05-13", 20.98, 21.3, 20.94, 21.46, 209768],
+["2026-05-14", 21.37, 20.38, 20.36, 21.37, 187984],
+["2026-05-15", 20.1, 19.37, 19.22, 20.31, 255344],
+["2026-05-18", 19.01, 20.85, 18.79, 21.31, 456585],
+["2026-05-19", 20.7, 19.98, 19.58, 20.83, 324806],
+["2026-05-20", 19.89, 19.75, 19.63, 20.4, 192749],
+["2026-05-21", 19.97, 19.16, 19.16, 20.42, 221906],
+["2026-05-22", 19.3, 19.85, 19.18, 20.05, 168899],
+["2026-05-25", 20.2, 21.16, 20.15, 21.49, 345193],
+["2026-05-26", 21.31, 21.69, 21.14, 22.11, 361090]
+];
+const weekData_2 = [
+["2025-04-03", 13.78, 13.64, 13.49, 13.88, 277985],
+["2025-04-11", 12.9, 12.68, 11.67, 12.97, 626054],
+["2025-04-18", 12.74, 12.67, 12.55, 12.94, 328516],
+["2025-04-25", 12.68, 12.96, 12.63, 13.23, 439123],
+["2025-04-30", 13.01, 12.94, 12.82, 13.15, 230842],
+["2025-05-09", 12.98, 13.15, 12.98, 13.32, 414535],
+["2025-05-16", 13.16, 13.18, 13.12, 13.38, 389517],
+["2025-05-23", 13.18, 14.18, 13.05, 14.44, 894276],
+["2025-05-30", 14.36, 13.84, 13.76, 14.41, 638270],
+["2025-06-06", 13.87, 15.23, 13.84, 15.33, 868947],
+["2025-06-13", 15.26, 15.42, 14.76, 15.84, 1599737],
+["2025-06-20", 14.96, 14.57, 14.37, 15.44, 899067],
+["2025-06-27", 14.53, 15.46, 14.46, 15.94, 1049845],
+["2025-07-04", 15.14, 15.15, 14.97, 15.6, 820827],
+["2025-07-11", 15.2, 15.56, 14.87, 15.65, 688209],
+["2025-07-18", 15.85, 16.22, 15.45, 16.58, 988797],
+["2025-07-25", 16.01, 16.44, 16.0, 16.71, 1124553],
+["2025-08-01", 16.5, 15.09, 15.03, 16.5, 748045],
+["2025-08-08", 15.18, 15.65, 15.06, 15.81, 589579],
+["2025-08-15", 15.58, 15.75, 15.44, 15.93, 678657],
+["2025-08-22", 15.76, 16.16, 15.52, 16.4, 918704],
+["2025-08-29", 16.39, 17.15, 16.09, 17.4, 1284074],
+["2025-09-05", 17.0, 16.76, 16.27, 18.13, 1954695],
+["2025-09-12", 16.76, 17.78, 16.7, 18.08, 1476338],
+["2025-09-19", 17.82, 16.28, 16.08, 17.87, 1160857],
+["2025-09-26", 16.4, 16.1, 15.1, 16.76, 1302742],
+["2025-09-30", 16.6, 17.27, 16.28, 17.38, 769611],
+["2025-10-10", 18.04, 17.43, 17.35, 18.12, 736384],
+["2025-10-17", 17.0, 16.93, 16.85, 18.71, 1647083],
+["2025-10-24", 16.6, 15.97, 15.51, 16.78, 1069327],
+["2025-10-31", 15.99, 16.64, 15.89, 17.16, 1283448],
+["2025-11-07", 16.69, 17.09, 15.86, 17.4, 1170309],
+["2025-11-14", 17.5, 18.71, 16.89, 19.14, 2021926],
+["2025-11-21", 18.59, 16.64, 16.61, 19.15, 2449210],
+["2025-11-28", 16.79, 17.55, 16.48, 18.38, 1821164],
+["2025-12-05", 18.05, 17.5, 16.73, 18.29, 1370662],
+["2025-12-12", 17.51, 16.85, 16.67, 17.56, 1206494],
+["2025-12-19", 16.85, 18.75, 16.81, 19.75, 3112846],
+["2025-12-26", 19.25, 19.75, 19.08, 21.09, 3606949],
+["2025-12-31", 19.78, 18.61, 18.36, 20.25, 1439768],
+["2026-01-09", 18.98, 21.57, 18.82, 22.79, 3552906],
+["2026-01-16", 22.2, 21.02, 20.71, 22.2, 2919443],
+["2026-01-23", 21.1, 23.69, 20.18, 24.07, 3087974],
+["2026-01-30", 25.19, 23.55, 23.46, 28.19, 4508407],
+["2026-02-06", 21.2, 21.13, 20.0, 22.33, 1851703],
+["2026-02-13", 21.74, 21.79, 21.5, 22.97, 1459903],
+["2026-02-27", 22.52, 25.85, 22.23, 25.85, 1946599],
+["2026-03-06", 26.76, 23.14, 22.73, 26.76, 2422812],
+["2026-03-13", 22.25, 21.45, 21.35, 23.33, 1153104],
+["2026-03-20", 21.31, 19.65, 19.62, 21.37, 1156696],
+["2026-03-27", 19.0, 19.39, 18.04, 19.53, 1078149],
+["2026-04-03", 19.3, 19.13, 19.08, 20.14, 752410],
+["2026-04-10", 19.14, 20.34, 19.03, 20.55, 573125],
+["2026-04-17", 20.08, 21.18, 20.08, 21.29, 712517],
+["2026-04-24", 21.15, 21.32, 20.97, 22.6, 1163717],
+["2026-04-30", 21.32, 20.09, 19.9, 21.54, 677366],
+["2026-05-08", 20.11, 21.35, 20.11, 21.56, 677272],
+["2026-05-15", 21.35, 19.37, 19.22, 21.9, 1086625],
+["2026-05-22", 19.01, 19.85, 18.79, 21.31, 1364945],
+["2026-05-26", 20.2, 21.69, 20.15, 22.11, 706283]
+];
+
+// === Stock 3: 移远通信 (sh603236) ===
+const dayData_3 = [
+["2026-02-26", 84.91, 86.95, 84.29, 86.96, 81852],
+["2026-02-27", 86.4, 86.41, 85.07, 87.42, 61368],
+["2026-03-02", 84.98, 83.69, 83.21, 85.28, 86810],
+["2026-03-03", 83.69, 79.64, 79.58, 84.7, 88146],
+["2026-03-04", 79.0, 78.75, 78.5, 81.24, 56628],
+["2026-03-05", 80.0, 79.23, 78.9, 80.5, 49521],
+["2026-03-06", 79.02, 81.81, 78.86, 82.79, 63611],
+["2026-03-09", 80.16, 80.9, 77.8, 81.54, 66965],
+["2026-03-10", 82.5, 81.77, 80.8, 82.79, 58053],
+["2026-03-11", 81.7, 80.89, 80.83, 82.28, 46117],
+["2026-03-12", 80.58, 79.23, 79.0, 81.01, 49453],
+["2026-03-13", 78.78, 78.98, 78.36, 79.68, 41606],
+["2026-03-16", 78.79, 79.39, 76.76, 79.43, 46204],
+["2026-03-17", 79.7, 78.88, 78.7, 80.98, 54054],
+["2026-03-18", 78.8, 78.62, 76.92, 79.58, 55009],
+["2026-03-19", 77.48, 76.8, 76.58, 77.88, 41958],
+["2026-03-20", 76.93, 76.51, 76.51, 78.0, 44823],
+["2026-03-23", 74.66, 72.92, 72.2, 75.4, 64834],
+["2026-03-24", 73.99, 73.48, 71.69, 74.1, 50237],
+["2026-03-25", 73.8, 75.0, 73.8, 75.48, 47152],
+["2026-03-26", 74.75, 72.66, 72.57, 74.82, 36931],
+["2026-03-27", 71.7, 72.85, 71.67, 73.6, 33723],
+["2026-03-30", 71.6, 72.6, 71.05, 72.88, 37291],
+["2026-03-31", 72.6, 74.2, 72.17, 76.0, 70379],
+["2026-04-01", 76.0, 74.73, 74.1, 76.0, 53909],
+["2026-04-02", 74.2, 72.33, 71.92, 74.5, 47448],
+["2026-04-03", 72.33, 73.49, 72.0, 74.81, 52021],
+["2026-04-07", 73.5, 72.58, 71.9, 74.55, 42346],
+["2026-04-08", 73.88, 76.45, 73.88, 76.54, 75371],
+["2026-04-09", 75.7, 75.87, 74.74, 76.27, 43928],
+["2026-04-10", 76.54, 77.22, 76.52, 78.44, 62441],
+["2026-04-13", 76.05, 76.11, 75.91, 77.22, 45105],
+["2026-04-14", 76.9, 77.95, 76.88, 78.38, 61288],
+["2026-04-15", 78.28, 76.74, 76.25, 78.88, 50452],
+["2026-04-16", 76.81, 77.72, 76.3, 77.97, 46074],
+["2026-04-17", 77.54, 77.0, 76.54, 77.54, 44175],
+["2026-04-20", 77.05, 79.0, 76.9, 79.47, 79633],
+["2026-04-21", 79.06, 78.45, 77.11, 79.36, 50748],
+["2026-04-22", 78.0, 81.53, 77.8, 82.29, 96886],
+["2026-04-23", 81.03, 85.03, 81.01, 85.81, 144534],
+["2026-04-24", 79.6, 76.53, 76.53, 79.6, 183917],
+["2026-04-27", 75.51, 74.03, 73.3, 75.9, 109647],
+["2026-04-28", 73.79, 74.17, 73.4, 74.99, 60196],
+["2026-04-29", 74.28, 73.37, 72.91, 74.37, 62199],
+["2026-04-30", 73.06, 72.3, 71.85, 73.35, 59753],
+["2026-05-06", 72.0, 73.2, 72.0, 74.28, 70981],
+["2026-05-07", 73.8, 74.39, 72.99, 74.44, 53904],
+["2026-05-08", 74.0, 75.72, 73.6, 75.97, 64725],
+["2026-05-11", 76.38, 75.16, 74.85, 76.56, 66443],
+["2026-05-12", 74.98, 73.88, 73.4, 75.5, 56247],
+["2026-05-13", 73.0, 75.77, 72.74, 76.14, 77326],
+["2026-05-14", 75.77, 73.5, 73.31, 76.27, 62031],
+["2026-05-15", 73.61, 73.09, 72.6, 74.99, 62243],
+["2026-05-18", 72.9, 74.7, 71.55, 75.74, 68683],
+["2026-05-19", 75.6, 75.94, 73.72, 76.15, 58895],
+["2026-05-20", 75.15, 74.0, 73.62, 75.85, 59550],
+["2026-05-21", 74.47, 74.51, 74.45, 78.1, 126468],
+["2026-05-22", 75.0, 74.96, 74.01, 76.59, 73745],
+["2026-05-25", 74.38, 76.8, 74.31, 77.77, 78590],
+["2026-05-26", 76.8, 77.3, 74.05, 77.43, 81931]
+];
+const weekData_3 = [
+["2025-04-03", 82.05, 74.16, 74.15, 88.01, 655869],
+["2025-04-11", 66.65, 67.42, 55.71, 68.88, 846263],
+["2025-04-18", 69.16, 66.69, 65.09, 70.11, 479237],
+["2025-04-25", 67.33, 68.19, 66.12, 69.98, 514749],
+["2025-04-30", 67.88, 74.45, 67.33, 75.34, 381532],
+["2025-05-09", 75.69, 74.36, 74.13, 78.55, 441826],
+["2025-05-16", 75.67, 74.31, 73.38, 77.95, 342060],
+["2025-05-23", 73.73, 70.78, 70.78, 74.59, 237593],
+["2025-05-30", 70.77, 69.88, 69.41, 71.61, 205286],
+["2025-06-06", 69.72, 76.61, 69.43, 77.05, 283534],
+["2025-06-13", 76.62, 76.44, 73.54, 79.25, 417831],
+["2025-06-20", 76.48, 76.99, 76.19, 80.95, 401765],
+["2025-06-27", 76.05, 81.93, 75.82, 83.14, 420443],
+["2025-07-04", 82.48, 84.03, 81.78, 88.2, 457643],
+["2025-07-11", 83.08, 81.63, 80.55, 86.37, 441713],
+["2025-07-18", 81.07, 82.55, 81.07, 84.77, 391143],
+["2025-07-25", 82.25, 80.47, 79.14, 83.59, 366878],
+["2025-08-01", 80.95, 81.88, 79.87, 84.38, 491313],
+["2025-08-08", 80.95, 82.91, 80.85, 85.44, 449972],
+["2025-08-15", 82.76, 85.65, 82.65, 87.03, 470643],
+["2025-08-22", 85.36, 96.66, 85.25, 97.32, 728249],
+["2025-08-29", 97.45, 109.99, 95.65, 113.0, 1021601],
+["2025-09-05", 110.91, 94.31, 89.51, 112.91, 853662],
+["2025-09-12", 94.3, 98.19, 91.88, 99.96, 595851],
+["2025-09-19", 98.2, 100.38, 96.66, 106.16, 610383],
+["2025-09-26", 102.5, 102.15, 97.98, 108.28, 596988],
+["2025-09-30", 101.9, 105.12, 100.6, 105.6, 182591],
+["2025-10-10", 105.66, 103.8, 103.08, 111.69, 254316],
+["2025-10-17", 97.5, 93.77, 93.72, 104.55, 572274],
+["2025-10-24", 95.7, 99.56, 94.18, 99.95, 472613],
+["2025-10-31", 100.0, 94.82, 94.01, 103.27, 498894],
+["2025-11-07", 94.05, 90.25, 88.88, 95.22, 342275],
+["2025-11-14", 90.38, 88.4, 88.1, 91.25, 300840],
+["2025-11-21", 87.68, 82.5, 82.5, 88.52, 257574],
+["2025-11-28", 83.2, 88.75, 82.49, 91.18, 342315],
+["2025-12-05", 91.0, 91.32, 88.53, 95.6, 484368],
+["2025-12-12", 92.1, 92.71, 88.88, 93.28, 314103],
+["2025-12-19", 92.0, 92.01, 88.75, 95.0, 398858],
+["2025-12-26", 93.0, 94.44, 92.21, 96.3, 348024],
+["2025-12-31", 93.96, 95.41, 92.6, 96.96, 228040],
+["2026-01-09", 95.58, 101.72, 95.48, 103.28, 541418],
+["2026-01-16", 103.71, 101.18, 100.1, 107.04, 580749],
+["2026-01-23", 100.5, 99.75, 96.0, 101.0, 477073],
+["2026-01-30", 99.58, 92.28, 90.5, 99.75, 358718],
+["2026-02-06", 88.0, 86.18, 85.36, 90.34, 318934],
+["2026-02-13", 84.41, 85.45, 83.0, 88.39, 354240],
+["2026-02-27", 86.27, 86.41, 84.19, 87.42, 249848],
+["2026-03-06", 84.98, 81.81, 78.5, 85.28, 344716],
+["2026-03-13", 80.16, 78.98, 77.8, 82.79, 262194],
+["2026-03-20", 78.79, 76.51, 76.51, 80.98, 242048],
+["2026-03-27", 74.66, 72.85, 71.67, 75.48, 232877],
+["2026-04-03", 71.6, 73.49, 71.05, 76.0, 261048],
+["2026-04-10", 73.5, 77.22, 71.9, 78.44, 224086],
+["2026-04-17", 76.05, 77.0, 75.91, 78.88, 247094],
+["2026-04-24", 77.05, 76.53, 76.53, 85.81, 555718],
+["2026-04-30", 75.51, 72.3, 71.85, 75.9, 291795],
+["2026-05-08", 72.0, 75.72, 72.0, 75.97, 189610],
+["2026-05-15", 76.38, 73.09, 72.6, 76.56, 324290],
+["2026-05-22", 72.9, 74.96, 71.55, 78.1, 387341],
+["2026-05-26", 74.38, 77.3, 74.05, 77.77, 160521]
+];
+
+// === Stock 4: 顶点软件 (sh603383) ===
+const dayData_4 = [
+["2026-02-26", 35.92, 35.87, 35.76, 35.98, 24801],
+["2026-02-27", 35.8, 36.12, 35.77, 36.19, 24553],
+["2026-03-02", 35.8, 34.53, 34.47, 35.8, 55743],
+["2026-03-03", 34.54, 32.85, 32.81, 34.78, 49941],
+["2026-03-04", 32.51, 32.24, 32.2, 33.08, 28528],
+["2026-03-05", 32.87, 32.48, 32.37, 32.95, 22896],
+["2026-03-06", 32.2, 32.85, 32.2, 32.99, 22382],
+["2026-03-09", 32.32, 32.53, 31.71, 32.74, 31781],
+["2026-03-10", 32.85, 32.86, 32.57, 33.2, 30192],
+["2026-03-11", 32.9, 32.77, 32.65, 32.97, 18860],
+["2026-03-12", 32.73, 32.76, 32.5, 33.08, 19750],
+["2026-03-13", 32.52, 32.21, 32.15, 32.62, 17886],
+["2026-03-16", 32.1, 32.49, 32.0, 32.5, 17011],
+["2026-03-17", 32.61, 32.36, 32.35, 33.08, 25390],
+["2026-03-18", 32.36, 32.22, 31.99, 32.58, 22294],
+["2026-03-19", 31.92, 31.5, 31.4, 32.08, 27185],
+["2026-03-20", 31.66, 30.35, 30.35, 31.8, 33323],
+["2026-03-23", 29.87, 28.51, 28.31, 29.87, 44027],
+["2026-03-24", 28.97, 29.15, 28.31, 29.25, 37052],
+["2026-03-25", 29.2, 29.34, 29.14, 29.52, 25723],
+["2026-03-26", 29.32, 28.67, 28.63, 29.38, 20860],
+["2026-03-27", 28.44, 29.05, 28.33, 29.19, 21865],
+["2026-03-30", 28.7, 29.08, 28.5, 29.15, 20301],
+["2026-03-31", 29.18, 28.65, 28.53, 29.5, 28052],
+["2026-04-01", 29.12, 29.05, 28.81, 29.18, 23645],
+["2026-04-02", 28.95, 28.22, 28.1, 29.0, 24163],
+["2026-04-03", 28.38, 27.9, 27.76, 28.45, 20303],
+["2026-04-07", 27.91, 28.27, 27.91, 28.46, 22366],
+["2026-04-08", 28.71, 29.43, 28.71, 29.48, 50057],
+["2026-04-09", 29.17, 28.41, 28.38, 29.17, 40727],
+["2026-04-10", 28.57, 29.16, 28.57, 29.57, 51906],
+["2026-04-13", 29.03, 29.04, 28.79, 29.19, 28890],
+["2026-04-14", 29.23, 31.94, 29.23, 31.94, 97333],
+["2026-04-15", 32.8, 31.63, 31.41, 32.84, 120878],
+["2026-04-16", 31.94, 32.83, 31.94, 33.7, 120156],
+["2026-04-17", 32.36, 32.18, 32.01, 32.5, 58853],
+["2026-04-20", 31.98, 32.0, 31.8, 32.18, 48702],
+["2026-04-21", 32.25, 32.4, 31.6, 32.58, 50782],
+["2026-04-22", 32.4, 33.78, 32.18, 33.79, 103352],
+["2026-04-23", 33.6, 33.41, 32.13, 33.7, 98625],
+["2026-04-24", 32.8, 32.5, 32.2, 32.81, 54648],
+["2026-04-27", 32.54, 33.53, 32.4, 33.53, 69710],
+["2026-04-28", 33.2, 32.95, 32.9, 33.68, 44913],
+["2026-04-29", 33.2, 32.97, 32.8, 33.51, 48645],
+["2026-04-30", 32.86, 32.46, 32.4, 33.38, 53787],
+["2026-05-06", 32.7, 32.53, 32.51, 33.5, 91262],
+["2026-05-07", 32.69, 33.21, 32.28, 33.3, 69334],
+["2026-05-08", 33.5, 33.33, 33.2, 34.32, 91559],
+["2026-05-11", 33.72, 33.6, 32.95, 33.76, 65593],
+["2026-05-12", 33.33, 33.18, 32.92, 33.5, 45517],
+["2026-05-13", 33.05, 33.16, 32.61, 33.42, 56814],
+["2026-05-14", 33.4, 32.7, 32.59, 33.5, 55096],
+["2026-05-15", 32.64, 32.5, 32.35, 33.4, 63205],
+["2026-05-18", 32.5, 33.25, 32.35, 33.4, 52059],
+["2026-05-19", 33.26, 34.04, 33.0, 34.16, 71141],
+["2026-05-20", 33.85, 33.21, 33.08, 34.0, 49770],
+["2026-05-21", 33.33, 33.25, 33.16, 34.59, 95415],
+["2026-05-22", 33.35, 32.8, 32.6, 33.59, 59787],
+["2026-05-25", 32.85, 32.91, 32.43, 33.4, 47499],
+["2026-05-26", 32.91, 34.04, 32.35, 34.34, 91890]
+];
+const weekData_4 = [
+["2025-04-03", 36.56, 39.5, 35.92, 40.18, 370591],
+["2025-04-11", 36.93, 37.92, 34.58, 38.6, 497924],
+["2025-04-18", 38.18, 38.59, 37.01, 39.63, 321397],
+["2025-04-25", 38.5, 39.52, 38.1, 41.22, 278830],
+["2025-04-30", 39.52, 41.25, 38.62, 41.7, 175755],
+["2025-05-09", 41.26, 40.14, 39.95, 43.16, 242529],
+["2025-05-16", 40.4, 39.45, 39.43, 41.8, 217657],
+["2025-05-23", 39.45, 38.48, 38.44, 40.35, 101100],
+["2025-05-30", 38.48, 38.4, 37.42, 39.48, 121990],
+["2025-06-06", 38.13, 38.83, 37.91, 39.65, 124229],
+["2025-06-13", 38.83, 38.58, 38.51, 40.64, 172318],
+["2025-06-20", 38.55, 36.6, 36.4, 39.88, 177828],
+["2025-06-27", 36.3, 42.79, 36.3, 44.54, 563920],
+["2025-07-04", 43.33, 40.88, 39.47, 43.49, 462443],
+["2025-07-11", 40.41, 42.41, 40.21, 43.65, 565439],
+["2025-07-18", 42.39, 41.8, 40.7, 42.72, 347956],
+["2025-07-25", 41.51, 42.61, 40.47, 43.08, 400591],
+["2025-08-01", 42.61, 41.18, 40.88, 44.48, 485375],
+["2025-08-08", 40.87, 40.05, 39.93, 41.68, 249499],
+["2025-08-15", 40.07, 42.86, 40.05, 43.36, 457688],
+["2025-08-22", 43.24, 48.1, 42.98, 49.01, 741127],
+["2025-08-29", 48.79, 46.01, 44.3, 49.07, 557647],
+["2025-09-05", 46.06, 42.3, 41.3, 46.48, 331387],
+["2025-09-12", 42.0, 42.67, 41.62, 43.67, 239512],
+["2025-09-19", 42.34, 41.32, 41.08, 43.3, 234430],
+["2025-09-26", 41.4, 40.39, 39.6, 41.91, 205302],
+["2025-09-30", 40.65, 42.66, 39.81, 43.08, 145518],
+["2025-10-10", 42.4, 42.17, 42.0, 43.6, 98787],
+["2025-10-17", 40.68, 38.68, 38.48, 43.1, 205429],
+["2025-10-24", 39.57, 38.5, 37.81, 39.66, 140581],
+["2025-10-31", 39.0, 39.41, 38.68, 40.8, 241955],
+["2025-11-07", 39.64, 37.31, 37.27, 39.64, 168904],
+["2025-11-14", 37.48, 37.36, 36.63, 38.32, 162614],
+["2025-11-21", 37.2, 37.4, 36.87, 38.44, 152798],
+["2025-11-28", 37.4, 37.56, 36.6, 38.92, 185491],
+["2025-12-05", 37.84, 38.57, 35.4, 39.71, 290049],
+["2025-12-12", 38.71, 37.11, 36.86, 39.58, 354826],
+["2025-12-19", 36.9, 36.3, 35.63, 37.29, 202645],
+["2025-12-26", 36.39, 36.7, 35.76, 37.1, 176039],
+["2025-12-31", 36.5, 36.11, 36.06, 36.7, 100028],
+["2026-01-09", 36.29, 38.29, 36.04, 38.57, 314120],
+["2026-01-16", 38.8, 39.72, 38.75, 42.5, 567556],
+["2026-01-23", 39.4, 38.64, 37.8, 39.72, 221772],
+["2026-01-30", 38.6, 36.62, 36.32, 38.86, 214592],
+["2026-02-06", 36.5, 36.06, 35.78, 36.94, 163298],
+["2026-02-13", 36.36, 35.86, 35.86, 36.92, 127676],
+["2026-02-27", 36.08, 36.12, 35.53, 36.19, 107493],
+["2026-03-06", 35.8, 32.85, 32.2, 35.8, 179490],
+["2026-03-13", 32.32, 32.21, 31.71, 33.2, 118469],
+["2026-03-20", 32.1, 30.35, 30.35, 33.08, 125203],
+["2026-03-27", 29.87, 29.05, 28.31, 29.87, 149527],
+["2026-04-03", 28.7, 27.9, 27.76, 29.5, 116464],
+["2026-04-10", 27.91, 29.16, 27.91, 29.57, 165056],
+["2026-04-17", 29.03, 32.18, 28.79, 33.7, 426110],
+["2026-04-24", 31.98, 32.5, 31.6, 33.79, 356109],
+["2026-04-30", 32.54, 32.46, 32.4, 33.68, 217055],
+["2026-05-08", 32.7, 33.33, 32.28, 34.32, 252155],
+["2026-05-15", 33.72, 32.5, 32.35, 33.76, 286225],
+["2026-05-22", 32.5, 32.8, 32.35, 34.59, 328172],
+["2026-05-26", 32.85, 34.04, 32.35, 34.34, 139389]
+];
+
+// === Stock 5: 紫燕食品 (sh603057) ===
+const dayData_5 = [
+["2026-02-26", 32.83, 33.22, 31.92, 34.43, 119742],
+["2026-02-27", 33.06, 33.55, 31.97, 33.8, 52016],
+["2026-03-02", 33.03, 32.6, 32.25, 33.39, 59669],
+["2026-03-03", 33.07, 33.5, 32.37, 34.81, 79441],
+["2026-03-04", 32.52, 33.17, 32.52, 34.09, 40767],
+["2026-03-05", 33.83, 34.47, 32.91, 35.3, 73239],
+["2026-03-06", 34.03, 34.13, 34.01, 35.99, 57713],
+["2026-03-09", 33.76, 32.39, 31.95, 34.27, 70976],
+["2026-03-10", 32.24, 31.9, 31.33, 32.5, 48614],
+["2026-03-11", 31.9, 31.5, 31.38, 31.95, 25480],
+["2026-03-12", 31.38, 31.69, 31.0, 32.61, 36981],
+["2026-03-13", 31.54, 30.37, 30.27, 31.61, 43931],
+["2026-03-16", 30.07, 29.65, 29.4, 30.3, 32244],
+["2026-03-17", 29.89, 28.42, 27.89, 29.89, 53814],
+["2026-03-18", 28.07, 28.24, 27.68, 28.66, 38331],
+["2026-03-19", 28.19, 26.89, 26.6, 28.19, 30938],
+["2026-03-20", 27.02, 26.4, 26.34, 27.25, 28622],
+["2026-03-23", 26.0, 23.76, 23.76, 26.19, 64839],
+["2026-03-24", 24.49, 23.9, 23.26, 24.49, 49727],
+["2026-03-25", 23.94, 24.42, 23.94, 25.1, 53492],
+["2026-03-26", 25.07, 24.69, 24.32, 25.24, 33841],
+["2026-03-27", 24.67, 24.58, 24.45, 25.15, 37262],
+["2026-03-30", 24.56, 25.28, 24.3, 25.69, 35533],
+["2026-03-31", 25.4, 24.54, 24.51, 25.65, 18210],
+["2026-04-01", 25.55, 25.01, 24.64, 25.55, 20123],
+["2026-04-02", 24.92, 26.93, 24.68, 27.07, 69174],
+["2026-04-03", 26.8, 25.65, 25.31, 26.98, 51359],
+["2026-04-07", 26.23, 25.2, 24.76, 26.26, 29024],
+["2026-04-08", 25.6, 25.9, 25.02, 25.99, 26172],
+["2026-04-09", 26.08, 25.55, 25.5, 26.19, 24912],
+["2026-04-10", 25.31, 24.71, 24.28, 26.06, 48091],
+["2026-04-13", 24.46, 24.73, 24.22, 25.0, 31617],
+["2026-04-14", 24.75, 24.85, 24.42, 24.96, 22830],
+["2026-04-15", 24.83, 24.94, 24.76, 25.26, 25036],
+["2026-04-16", 24.89, 25.55, 24.75, 25.67, 31582],
+["2026-04-17", 25.6, 25.95, 24.73, 26.77, 66338],
+["2026-04-20", 26.29, 28.55, 25.65, 28.55, 36692],
+["2026-04-21", 29.45, 28.32, 28.1, 29.45, 87432],
+["2026-04-22", 28.18, 27.52, 27.27, 28.31, 48076],
+["2026-04-23", 27.79, 27.05, 26.93, 27.85, 36338],
+["2026-04-24", 27.05, 26.7, 26.13, 27.22, 39226],
+["2026-04-27", 26.4, 27.0, 26.2, 27.35, 33871],
+["2026-04-28", 26.84, 27.05, 26.48, 27.22, 26037],
+["2026-04-29", 27.3, 26.73, 26.65, 27.59, 31230],
+["2026-04-30", 27.29, 27.78, 27.11, 27.98, 42602],
+["2026-05-06", 27.8, 28.45, 27.6, 28.59, 45358],
+["2026-05-07", 28.79, 28.77, 28.51, 29.3, 33846],
+["2026-05-08", 29.4, 27.79, 27.71, 29.4, 38923],
+["2026-05-11", 27.81, 26.83, 26.66, 27.81, 43444],
+["2026-05-12", 26.85, 26.26, 25.86, 26.85, 34300],
+["2026-05-13", 26.0, 27.2, 25.88, 27.6, 32576],
+["2026-05-14", 27.2, 28.21, 27.0, 28.75, 49032],
+["2026-05-15", 27.92, 28.07, 27.71, 28.82, 32299],
+["2026-05-18", 28.48, 26.6, 25.9, 28.48, 51533],
+["2026-05-19", 26.69, 27.64, 26.6, 28.2, 37549],
+["2026-05-20", 28.16, 28.41, 27.31, 28.65, 37516],
+["2026-05-21", 28.22, 27.31, 27.06, 28.51, 34205],
+["2026-05-22", 27.49, 26.87, 26.52, 27.68, 34423],
+["2026-05-25", 26.36, 27.01, 26.36, 28.25, 29410],
+["2026-05-26", 27.01, 26.66, 26.33, 27.49, 26557]
+];
+const weekData_5 = [
+["2025-04-03", 19.09, 19.49, 18.81, 19.77, 67559],
+["2025-04-11", 19.29, 21.59, 17.78, 21.98, 277759],
+["2025-04-18", 21.48, 23.34, 21.36, 24.36, 278248],
+["2025-04-25", 23.34, 22.3, 21.66, 24.26, 221380],
+["2025-04-30", 21.78, 21.85, 21.6, 22.68, 71169],
+["2025-05-09", 22.08, 22.03, 21.23, 22.37, 112377],
+["2025-05-16", 22.03, 21.4, 20.88, 22.28, 99522],
+["2025-05-23", 21.48, 20.75, 20.65, 21.76, 80410],
+["2025-05-30", 20.66, 20.4, 20.34, 21.3, 78528],
+["2025-06-06", 20.47, 21.38, 20.17, 22.0, 127864],
+["2025-06-13", 21.47, 20.77, 20.5, 21.47, 89036],
+["2025-06-20", 20.73, 21.08, 20.5, 22.65, 164051],
+["2025-06-27", 21.2, 22.47, 20.36, 23.15, 125644],
+["2025-07-04", 22.48, 21.06, 21.06, 22.48, 131151],
+["2025-07-11", 21.06, 21.05, 20.76, 21.48, 70484],
+["2025-07-18", 21.19, 20.72, 20.38, 21.19, 66524],
+["2025-07-25", 20.9, 21.01, 20.6, 22.4, 146056],
+["2025-08-01", 21.0, 20.78, 20.6, 21.1, 84272],
+["2025-08-08", 20.78, 22.35, 19.81, 22.96, 166988],
+["2025-08-15", 22.33, 22.26, 21.62, 24.24, 306166],
+["2025-08-22", 22.2, 21.93, 21.55, 22.73, 200422],
+["2025-08-29", 21.73, 26.05, 21.59, 26.68, 553605],
+["2025-09-05", 25.9, 23.49, 22.99, 25.96, 255487],
+["2025-09-12", 23.48, 21.98, 21.59, 23.69, 213036],
+["2025-09-19", 22.08, 20.72, 20.64, 22.91, 152298],
+["2025-09-26", 20.72, 19.64, 18.88, 20.8, 168950],
+["2025-09-30", 19.57, 19.33, 19.18, 19.74, 37942],
+["2025-10-10", 19.61, 19.42, 19.28, 19.88, 46450],
+["2025-10-17", 19.0, 18.72, 18.66, 19.58, 133707],
+["2025-10-24", 18.8, 18.76, 18.41, 19.0, 83472],
+["2025-10-31", 18.76, 18.35, 17.98, 18.83, 126201],
+["2025-11-07", 18.35, 18.92, 18.1, 19.34, 154972],
+["2025-11-14", 18.92, 19.16, 18.8, 19.87, 149894],
+["2025-11-21", 19.19, 18.16, 18.15, 19.45, 117575],
+["2025-11-28", 18.17, 18.62, 18.17, 18.92, 83268],
+["2025-12-05", 18.51, 17.74, 17.54, 19.17, 93963],
+["2025-12-12", 17.66, 17.35, 17.01, 17.79, 90308],
+["2025-12-19", 17.35, 19.14, 17.26, 19.38, 221793],
+["2025-12-26", 19.14, 19.53, 18.81, 20.18, 191521],
+["2025-12-31", 19.72, 20.34, 19.5, 20.52, 107259],
+["2026-01-09", 20.24, 27.25, 19.58, 27.25, 476312],
+["2026-01-16", 28.42, 27.67, 25.8, 30.45, 738850],
+["2026-01-23", 27.56, 29.69, 27.41, 31.82, 456180],
+["2026-01-30", 29.58, 28.2, 27.58, 29.85, 325418],
+["2026-02-06", 27.9, 27.46, 26.58, 28.39, 182779],
+["2026-02-13", 27.56, 28.37, 27.03, 30.06, 176547],
+["2026-02-27", 28.68, 33.55, 27.63, 34.43, 312672],
+["2026-03-06", 33.03, 34.13, 32.25, 35.99, 310829],
+["2026-03-13", 33.76, 30.37, 30.27, 34.27, 225982],
+["2026-03-20", 30.07, 26.4, 26.34, 30.3, 183949],
+["2026-03-27", 26.0, 24.58, 23.26, 26.19, 239161],
+["2026-04-03", 24.56, 25.65, 24.3, 27.07, 194399],
+["2026-04-10", 26.23, 24.71, 24.28, 26.26, 128199],
+["2026-04-17", 24.46, 25.95, 24.22, 26.77, 177403],
+["2026-04-24", 26.29, 26.7, 25.65, 29.45, 247764],
+["2026-04-30", 26.4, 27.78, 26.2, 27.98, 133740],
+["2026-05-08", 27.8, 27.79, 27.6, 29.4, 118127],
+["2026-05-15", 27.81, 28.07, 25.86, 28.82, 191651],
+["2026-05-22", 28.48, 26.87, 25.9, 28.65, 195226],
+["2026-05-26", 26.36, 26.66, 26.33, 28.25, 55967]
+];
+
+function makeOHLC(data) {
+  return data.map(function(d) { return [d[1], d[2], d[3], d[4]]; });
 }
-function sortT(col){
-  var th=event.target,table=th.closest('table'),tbody=table.querySelector('tbody');
-  var rows=Array.from(tbody.querySelectorAll('tr'));
-  var key=table.dataset.tableId+'_'+col;
-  var asc=sortSt[key]=!sortSt[key];
-  table.querySelectorAll('th').forEach(function(h){h.classList.remove('sort-asc','sort-desc');});
-  th.classList.add(asc?'sort-asc':'sort-desc');
-  rows.sort(function(a,b){
-    var va=parseVT(a.cells[col],col),vb=parseVT(b.cells[col],col);
-    if(typeof va==='string')return asc?va.localeCompare(vb):vb.localeCompare(va);
-    return asc?va-vb:vb-va;
+function makeVol(data, upColor, downColor) {
+  return data.map(function(d, i) {
+    var isUp = i === 0 ? d[2] >= d[1] : (d[2] >= data[i-1][2]);
+    return { value: d[5], itemStyle: { color: isUp ? upColor : downColor } };
   });
-  rows.forEach(function(r){tbody.appendChild(r);});
 }
-var sortS2={};
-function sortS(col){
-  var th=event.target,table=th.closest('table'),tbody=table.querySelector('tbody');
-  var rows=Array.from(tbody.querySelectorAll('tr'));
-  var key='s_'+col,asc=sortS2[key]=!sortS2[key];
-  table.querySelectorAll('th').forEach(function(h){h.classList.remove('sort-asc','sort-desc');});
-  th.classList.add(asc?'sort-asc':'sort-desc');
-  rows.sort(function(a,b){
-    var va=parseVT(a.cells[col],col),vb=parseVT(b.cells[col],col);
-    if(col===9){ va=a.cells[col].textContent.includes('完全')?1:2;vb=b.cells[col].textContent.includes('完全')?1:2; }
-    if(typeof va==='string')return asc?va.localeCompare(vb):vb.localeCompare(va);
-    return asc?va-vb:vb-va;
-  });
-  rows.forEach(function(r){tbody.appendChild(r);});
+function makeDates(data) {
+  return data.map(function(d) { return d[0]; });
 }
-function switchTab(idx){
-  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
-  document.querySelectorAll('.tab-content').forEach(function(c,i){c.classList.toggle('active',i===idx);});
-  document.getElementById('stats').style.display=idx===0?'':'none';
-  document.getElementById('filts').style.display=idx===0?'':'none';
+function renderChart(domId, klineData, title, showVol) {
+  var dom = document.getElementById(domId);
+  if (!dom) return;
+  var chart = echarts.init(dom);
+  var dates = makeDates(klineData);
+  var ohlc = makeOHLC(klineData);
+  var grid = showVol ? [
+    { left: '8%', right: '1%', top: '10%', height: '65%' },
+    { left: '8%', right: '1%', top: '80%', height: '15%' }
+  ] : [
+    { left: '8%', right: '1%', top: '10%', height: '80%' }
+  ];
+  
+  var series = [{
+    name: title,
+    type: 'candlestick',
+    data: ohlc,
+    xAxisIndex: 0,
+    yAxisIndex: 0,
+    itemStyle: {
+      color: COLOR_UP,
+      color0: COLOR_DOWN,
+      borderColor: COLOR_UP,
+      borderColor0: COLOR_DOWN,
+    },
+    markArea: {
+      silent: true,
+      data: getMarkArea(klineData)
+    },
+    markLine: {
+      silent: true,
+      symbol: 'none',
+      lineStyle: { type: 'dashed', width: 1 },
+      data: getMarkLines(klineData)
+    }
+  }];
+  
+  var yAxis = [{
+    scale: true,
+    splitLine: { lineStyle: { color: '#2a2e42' } },
+    axisLabel: { color: TEXT_COLOR }
+  }];
+  
+  var xAxis = [{
+    data: dates,
+    axisLine: { lineStyle: { color: BORDER_COLOR } },
+    axisLabel: { color: TEXT_COLOR, rotate: 45, fontSize: 10 },
+    splitLine: { show: false }
+  }];
+  
+  if (showVol) {
+    var upColor = COLOR_UP, downColor = COLOR_DOWN;
+    series.push({
+      name: '成交量',
+      type: 'bar',
+      xAxisIndex: 0,
+      yAxisIndex: 1,
+      data: makeVol(klineData, upColor, downColor)
+    });
+    yAxis.push({
+      scale: true,
+      splitLine: { show: false },
+      axisLabel: { show: false },
+      gridIndex: 1
+    });
+    xAxis.push({
+      data: dates,
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { show: false },
+      splitLine: { show: false },
+      gridIndex: 1
+    });
+  }
+  
+  var option = {
+    backgroundColor: BG_COLOR,
+    grid: grid,
+    xAxis: xAxis,
+    yAxis: yAxis,
+    series: series,
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross' },
+      backgroundColor: '#222538',
+      borderColor: BORDER_COLOR,
+      textStyle: { color: '#d1d4dc' },
+      formatter: function(params) {
+        var d = params[0];
+        if (!d) return '';
+        var date = d.axisValue;
+        var data = d.data;
+        var open = data[1], close = data[2], low = data[3], high = data[4];
+        var chgPct = ((close - open) / open * 100).toFixed(2);
+        var col = close >= open ? COLOR_UP : COLOR_DOWN;
+        var sign = chgPct >= 0 ? '+' : '';
+        var vol = data[5] ? data[5] : params[1] ? params[1].data.value : 0;
+        var volStr = vol >= 1e8 ? (vol/1e8).toFixed(2)+'亿' : (vol/1e4).toFixed(1)+'万';
+        return '<div style="font-size:12px">' +
+          '<b>' + date + '</b><br/>' +
+          '开盘: <b>' + open.toFixed(2) + '</b> | ' +
+          '收盘: <b style="color:' + col + '">' + close.toFixed(2) + '</b><br/>' +
+          '最高: <b>' + high.toFixed(2) + '</b> | ' +
+          '最低: <b>' + low.toFixed(2) + '</b><br/>' +
+          '涨跌: <b style="color:' + col + '">' + sign + chgPct + '%</b> | ' +
+          '成交量: ' + volStr +
+          '</div>';
+      }
+    },
+    dataZoom: [
+      { type: 'inside', xAxisIndex: [0, showVol?1:0], start: 0, end: 100 },
+      { type: 'slider', xAxisIndex: [0, showVol?1:0], start: 0, end: 100, height: 20, bottom: 5,
+        borderColor: BORDER_COLOR, backgroundColor: '#1a1d2e',
+        fillerColor: 'rgba(239,83,80,0.15)', handleStyle: { color: '#787b86' },
+        textStyle: { color: TEXT_COLOR } }
+    ]
+  };
+  chart.setOption(option);
+  window.addEventListener('resize', function() { chart.resize(); });
 }
-function filterMkt(mkt){
-  document.querySelectorAll('.f-btn').forEach(function(b){b.classList.remove('active');});
-  event.target.classList.add('active');
-  document.querySelectorAll('#tab0 tr[data-mkt]').forEach(function(tr){
-    tr.style.display=mkt==='all'?'':(tr.dataset.mkt===mkt?'':'none');
-  });
+
+function getMarkArea(data) {
+  if (data.length < 10) return [];
+  var prices = data.map(function(d) { return d[2]; });
+  var highIdx = prices.indexOf(Math.max.apply(null, prices));
+  var lowIdx = prices.indexOf(Math.min.apply(null, prices));
+  
+  // Determine decline zone and rebound zone based on high/low positions
+  var mid = Math.min(highIdx, lowIdx) + Math.floor(Math.abs(highIdx - lowIdx) / 2);
+  
+  return [
+    // Decline zone (high point area - colored green for decline)
+    highIdx < lowIdx ? [{
+      name: '下跌区间',
+      xAxis: data[highIdx][0],
+      itemStyle: { color: 'rgba(38,166,154,0.08)' }
+    }, {
+      xAxis: data[lowIdx][0]
+    }] : [{
+      name: '下跌区间',
+      xAxis: data[lowIdx][0],
+      itemStyle: { color: 'rgba(38,166,154,0.08)' }
+    }, {
+      xAxis: data[highIdx][0]
+    }],
+    // Rebound zone (recent area - colored red)
+    [{
+      name: '反弹区间',
+      xAxis: data[Math.max(0, data.length - 10)][0],
+      itemStyle: { color: 'rgba(239,83,80,0.06)' }
+    }, {
+      xAxis: data[data.length - 1][0]
+    }]
+  ];
 }
-function filterSig(typ){
-  document.querySelectorAll('#tab0 tr[data-sig]').forEach(function(tr){
-    tr.style.display=typ==='buy'?(tr.dataset.sig==='1'?'':'none'):(tr.dataset.sig==='2'?'':'none');
-  });
+
+function getMarkLines(data) {
+  if (data.length < 5) return [];
+  var prices = data.map(function(d) { return d[2]; });
+  var high = Math.max.apply(null, prices);
+  var low = Math.min.apply(null, prices);
+  var cur = prices[prices.length - 1];
+  var dd = ((high - low) / high * 100).toFixed(1);
+  var rb = ((cur - low) / low * 100).toFixed(1);
+  var fh = ((cur - high) / high * 100).toFixed(1);
+  
+  return [
+    { yAxis: high, name: '高点 ' + high.toFixed(2), label: { formatter: '高点 ' + high.toFixed(2) + ' (-' + dd + '%)', color: '#ef5350' }, lineStyle: { color: '#ef5350', type: 'dashed' } },
+    { yAxis: low, name: '低点 ' + low.toFixed(2), label: { formatter: '低点 ' + low.toFixed(2) + ' (+' + rb + '%)', color: '#26a69a' }, lineStyle: { color: '#26a69a', type: 'dashed' } },
+    { yAxis: cur, name: '现价 ' + cur.toFixed(2), label: { formatter: '现价 ' + cur.toFixed(2) + ' (' + fh + '%)', color: '#ff9800' }, lineStyle: { color: '#ff9800', width: 1.5 } }
+  ];
 }
+
+renderChart('chart-day-0', dayData_0, '东兴证券 日K', true);
+renderChart('chart-week-0', weekData_0, '东兴证券 周K', true);
+
+renderChart('chart-day-1', dayData_1, '世华科技 日K', true);
+renderChart('chart-week-1', weekData_1, '世华科技 周K', true);
+
+renderChart('chart-day-2', dayData_2, '贵研铂业 日K', true);
+renderChart('chart-week-2', weekData_2, '贵研铂业 周K', true);
+
+renderChart('chart-day-3', dayData_3, '移远通信 日K', true);
+renderChart('chart-week-3', weekData_3, '移远通信 周K', true);
+
+renderChart('chart-day-4', dayData_4, '顶点软件 日K', true);
+renderChart('chart-week-4', weekData_4, '顶点软件 周K', true);
+
+renderChart('chart-day-5', dayData_5, '紫燕食品 日K', true);
+renderChart('chart-week-5', weekData_5, '紫燕食品 周K', true);
+
 </script>
 </body>
 </html>
