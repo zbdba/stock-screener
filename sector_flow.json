@@ -3,7 +3,6 @@
   "source": "eastmoney push2delay 主力净流入(5/10/20日累计，真实)",
   "unit": "亿元",
   "mode": "aggregate",
-  "note": "东方财富 fflow 逐日历史接口(push2his)当前被限流/重置，暂以 push2delay 提供的真实「近5/10/20日主力净流入累计」口径呈现；接口恢复后可用 fetch_sector_flow.py 生成 daily 逐日模式覆盖。",
   "sectors": [
     {
       "code": "BK1215",
