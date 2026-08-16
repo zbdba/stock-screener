@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>创业板50(sz399673) - 持仓深度分析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f1117;color:#d1d4dc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif}
+.header{padding:14px 20px;border-bottom:1px solid #2a2e39;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:16px;color:#fff} .header a{color:#5b9bd5;text-decoration:none;font-size:12px}
+.container{max-width:1400px;margin:0 auto;padding:16px 20px;display:grid;grid-template-columns:320px 1fr;gap:16px}
+@media(max-width:768px){.container{grid-template-columns:1fr}}
+.card{background:#141722;border:1px solid #2a2e39;border-radius:10px;padding:16px;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title .dot{width:8px;height:8px;border-radius:50%}
+.gauge-wrap{text-align:center;padding:16px 0}
+.gauge-val{font-size:48px;font-weight:700;color:#5b9bd5}
+.gauge-label{font-size:12px;color:#787b86;margin-top:4px}
+.rating-tag{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600;margin-top:4px}
+.rating-recommend{background:rgba(34,171,148,0.2);color:#22ab94}
+.rating-watch{background:rgba(214,166,74,0.2);color:#d6a64a}
+.rating-avoid{background:rgba(239,83,80,0.2);color:#ef5350}
+.signal-card{text-align:center;padding:12px;background:#1a1d27;border-radius:8px;margin-bottom:8px}
+.signal-icon{font-size:32px;margin-bottom:4px}
+.signal-label{font-size:14px;font-weight:600}
+.signal-advice{font-size:11px;color:#787b86;margin-top:4px;line-height:1.4}
+.score-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid #1e222d}
+.score-row .s-label{color:#787b86}
+.score-row .s-val{color:#fff;font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.fund-metric{padding:8px;background:#1a1d27;border-radius:6px;text-align:center}
+.fund-metric .fm-label{font-size:10px;color:#787b86;margin-bottom:2px}
+.fund-metric .fm-val{font-size:13px;font-weight:600}
+.flow-up{color:#ef5350}.flow-down{color:#26a69a}
+.chart-wrap{width:100%;height:360px;margin-top:8px}
+.news-item{padding:8px 0;border-bottom:1px solid #1e222d;font-size:12px}
+.news-item .news-time{color:#787b86;font-size:10px}
+.news-item .news-title{color:#d1d4dc;font-weight:500;margin:2px 0}
+.news-item .news-summary{color:#787b86;font-size:11px;line-height:1.5}
+.warn{font-size:11px;color:#ef9a9a;padding:8px 12px;background:rgba(239,83,80,0.08);border-radius:6px;margin-top:10px}
+.advice-section{font-size:12px;line-height:1.9;color:#d1d4dc}
+.advice-section strong{color:#fff}
+.build-bar{margin:6px 0}
+.build-bar .bar-label{display:flex;justify-content:space-between;font-size:11px;color:#787b86;margin-bottom:2px}
+.build-bar .bar-track{height:8px;background:#1a1d27;border-radius:4px;overflow:hidden}
+.build-bar .bar-fill{height:100%;border-radius:4px}
+.num-up{color:#ef5350}.num-down{color:#26a69a}
+.footer{text-align:center;padding:12px;color:#787b86;font-size:10px;border-top:1px solid #2a2e39;margin-top:20px}
+.fund-table{width:100%;font-size:11px;border-collapse:collapse;margin-top:8px}
+.fund-table td{padding:4px 8px;border-bottom:1px solid #1e222d}
+.fund-table .ft-label{color:#787b86}
+.fund-table .ft-val{text-align:right;font-weight:600}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>创业板50 <span style="color:#787b86;font-size:13px">sz399673</span> <span style="font-size:12px;color:#d6a64a">🇨🇳 指数</span></h1>
+  <a href="index.html">← 返回列表</a>
+</div>
+<div class="container">
+<div class="sidebar">
+  <div class="card">
+    <div class="signal-card">
+      <div class="signal-icon">🟡 </div>
+      <div class="signal-label">买入关注</div>
+      <div class="signal-advice">超跌企稳回升，可小仓位试探</div>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge-val">73</div>
+      <div class="gauge-label">综合评分 / 100</div>
+      <span class="rating-tag rating-recommend">推荐关注</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ef5350"></span> 涨跌幅</div>
+    <div class="score-row"><span class="s-label">今日</span><span class="s-val num-up">+0.92%</span></div>
+    <div class="score-row"><span class="s-label">5日</span><span class="s-val num-up">+6.16%</span></div>
+    <div class="score-row"><span class="s-label">10日</span><span class="s-val num-up">+0.90%</span></div>
+    <div class="score-row"><span class="s-label">20日</span><span class="s-val num-down">-8.12%</span></div>
+    <div class="score-row"><span class="s-label">60日</span><span class="s-val num-down">-11.85%</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#5b9bd5"></span> 基本信息</div>
+    <div class="score-row"><span class="s-label">最新价</span><span class="s-val" style="color:#fff;font-weight:700">3737.08</span></div>
+    <div class="score-row"><span class="s-label">PE(TTM)</span><span class="s-val">38.5</span></div>
+    <div class="score-row"><span class="s-label">总市值</span><span class="s-val">7.01万亿</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ff9800"></span> 资金概览</div>
+    <div class="score-row"><span class="s-label">当日主力</span><span class="s-val" style="color:#ef5350">--</span></div>
+    <div class="score-row"><span class="s-label">5日累计</span><span class="s-val" style="color:#ef5350">--</span></div>
+    <div class="score-row"><span class="s-label">20日累计</span><span class="s-val" style="color:#ef5350">--</span></div>
+    <div class="score-row"><span class="s-label">超大单</span><span class="s-val" style="color:#ef5350">--</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#d6a64a"></span> 风控参考</div>
+    <div class="score-row"><span class="s-label">止损位</span><span class="s-val" style="color:#ef5350">3363.37 (-10%)</span></div>
+    <div class="score-row"><span class="s-label">支撑位</span><span class="s-val" style="color:#26a69a">3380.83</span></div>
+    <div class="score-row"><span class="s-label">阻力位</span><span class="s-val" style="color:#ef5350">4610.33</span></div>
+  </div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ef5350"></span> 📊 大资金走向分析</div>
+    <div class="chart-wrap" id="fundChart"></div>
+    <div style="margin-top:12px;font-size:12px;line-height:1.8;color:#d1d4dc;background:#1a1d27;padding:10px;border-radius:6px">
+      该市场不提供主力资金明细，以下为基于近 20 个交易日「(收盘-开盘)/开盘 × 成交额」的资金强度估算：累计强度 <span style="color:#ef5350;font-weight:600">+112095.3M</span>，其中 9/20 日为净流入方向。<span style="color:#787b86">（估算指标，仅供参考）</span>
+    </div>
+    <div style="color:#787b86;font-size:11px;padding:8px 0">暂无资金流向详细数据</div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#4285f4"></span> 📈 技术面分析（60日K线）</div>
+    <div class="chart-wrap" id="dayChart"></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#22ab94"></span> 📰 核心新闻</div>
+    <div id="newsContent">
+      <div class="news-item">
+        <div class="news-title"><a href="https://quote.eastmoney.com/sz399673.html" target="_blank" style="color:#5b9bd5;text-decoration:none">📈 东方财富 · 创业板50 个股页</a></div>
+        <div class="news-summary">实时行情、公告、研报与资金流详情</div>
+      </div>
+      <div class="news-item">
+        <div class="news-title"><a href="https://xueqiu.com/S/SZ399673" target="_blank" style="color:#5b9bd5;text-decoration:none">💬 雪球 · 创业板50 讨论与新闻</a></div>
+        <div class="news-summary">市场观点、公司动态与投资者讨论</div>
+      </div>
+    </div>
+  </div>
+  <div class="warn">
+    ⚠️ <strong>风险提示</strong>：本页面仅为数据分析展示，不构成投资建议。所有交易决策请结合自身风险承受能力。止损建议严格设在 -10%。
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ff9800"></span> 🎯 操作建议</div>
+    <div class="advice-section">
+      <p><strong>📊 综合判断</strong>：60日跌幅 -11.8%，近10日回升 0.9%，出现超跌企稳信号。上方阻力 4610.33。</p><p style="margin-top:8px"><strong>🎯 操作建议</strong>：可小仓位试探性建仓（仓位<10%），等待10日涨幅扩大或周线确认后加仓。</p><p style="margin-top:8px"><strong>🛡 风险管理</strong>：止损 3363.37（-10%），若5日内未出现明显反弹则考虑减仓。
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <a href="index.html">← 返回列表</a> | 持仓股票趋势分析 | 数据: 东方财富 + 腾讯行情 | 生成: 2026-08-08 | <a href="https://zbdba.github.io/stock-screener/" style="color:#5b9bd5">GitHub Pages</a>
+</div>
+<script>
+var DAY_DATA = [["2026-05-15", 4246.94, 4210.66, 4143.97, 4290.02, 35878661, 15122437027121.67], ["2026-05-18", 4171.5, 4196.08, 4162.24, 4247.06, 28912507, 12148437916255.33], ["2026-05-19", 4172.0, 4171.86, 4068.05, 4184.27, 30125729, 12476249324240.67], ["2026-05-20", 4153.03, 4187.12, 4147.14, 4221.77, 27849138, 11655820406738.0], ["2026-05-21", 4233.75, 4094.26, 4091.74, 4296.78, 37390734, 15558010218684.0], ["2026-05-22", 4146.66, 4219.52, 4130.03, 4231.65, 29353055, 12309888518866.67], ["2026-05-25", 4261.78, 4312.26, 4182.76, 4314.03, 29906003, 12768916257571.67], ["2026-05-26", 4288.89, 4346.5, 4278.98, 4362.37, 30983264, 13413532844746.67], ["2026-05-27", 4361.9, 4365.12, 4329.33, 4475.97, 30708094, 13481283179316.0], ["2026-05-28", 4361.59, 4460.72, 4279.72, 4472.58, 27648694, 12177424893196.0], ["2026-05-29", 4480.97, 4373.74, 4343.88, 4506.06, 32174207, 14182047254058.67], ["2026-06-01", 4399.83, 4272.0, 4262.66, 4424.87, 29029515, 12540295684265.0], ["2026-06-02", 4316.61, 4402.2, 4270.65, 4430.79, 26713273, 11668037087124.0], ["2026-06-03", 4445.47, 4487.57, 4419.42, 4601.23, 28636418, 12894234478532.0], ["2026-06-04", 4432.67, 4439.77, 4404.06, 4475.26, 23059812, 10237857047036.0], ["2026-06-05", 4432.36, 4283.43, 4255.1, 4465.89, 27335337, 11849340106318.0], ["2026-06-08", 4126.0, 4130.26, 4093.24, 4229.39, 26765775, 11110375061325.0], ["2026-06-09", 4187.8, 4294.87, 4142.34, 4296.12, 24322603, 10323591015266.33], ["2026-06-10", 4219.36, 4169.11, 4131.53, 4259.81, 22601654, 9462898166143.33], ["2026-06-11", 4150.47, 4104.16, 4038.15, 4229.97, 23149212, 9546951088112.0], ["2026-06-12", 4220.89, 4123.73, 4117.35, 4224.38, 30774296, 12787191860538.66], ["2026-06-15", 4196.96, 4339.56, 4133.61, 4339.56, 29507803, 12602517091073.0], ["2026-06-16", 4377.47, 4417.4, 4362.13, 4467.55, 29565470, 13055204877586.67], ["2026-06-17", 4373.22, 4478.69, 4369.0, 4479.95, 26181106, 11631078518994.67], ["2026-06-18", 4463.78, 4575.56, 4463.78, 4596.14, 29543722, 13428094348552.0], ["2026-06-22", 4595.91, 4695.61, 4557.05, 4695.61, 42798356, 19898767501470.66], ["2026-06-23", 4684.1, 4508.88, 4472.59, 4687.49, 38570362, 17573891178784.0], ["2026-06-24", 4498.77, 4560.85, 4467.45, 4566.59, 30383793, 13768810787259.0], ["2026-06-25", 4594.18, 4704.42, 4550.99, 4715.43, 36772733, 17124865636857.33], ["2026-06-26", 4641.29, 4488.64, 4474.23, 4643.96, 33092052, 15009264197172.0], ["2026-06-29", 4486.77, 4496.23, 4380.93, 4560.85, 31400878, 14065510419092.67], ["2026-06-30", 4503.45, 4644.9, 4497.62, 4660.25, 27602685, 12699783747915.0], ["2026-07-01", 4634.33, 4530.34, 4488.52, 4657.24, 37552788, 17119189465560.0], ["2026-07-02", 4391.61, 4255.9, 4236.45, 4422.95, 35504786, 15285165420860.0], ["2026-07-03", 4243.58, 4258.05, 4219.41, 4370.32, 29124681, 12472916468606.0], ["2026-07-06", 4291.08, 4176.8, 4128.8, 4301.96, 25796741, 10841131998732.0], ["2026-07-07", 4157.78, 4143.15, 4081.84, 4209.01, 22828939, 9461834250866.67], ["2026-07-08", 4167.32, 4076.83, 4060.24, 4209.79, 27277179, 11226250343598.0], ["2026-07-09", 4131.95, 4275.18, 4045.27, 4282.37, 30995482, 13021016015308.0], ["2026-07-10", 4304.13, 4067.54, 4066.84, 4314.43, 35680279, 14805900467266.33], ["2026-07-13", 4032.56, 3952.48, 3914.32, 4091.14, 28317581, 11287331151438.0], ["2026-07-14", 3957.63, 4099.02, 3901.39, 4100.45, 26587662, 10724452519644.0], ["2026-07-15", 4130.05, 4044.44, 4034.61, 4156.18, 25603277, 10442066094957.0], ["2026-07-16", 3945.1, 3925.83, 3887.27, 4036.18, 26776813, 10576198491488.0], ["2026-07-17", 3865.63, 3633.44, 3586.8, 3865.71, 31860755, 11773557896408.33], ["2026-07-20", 3719.84, 3668.77, 3553.8, 3778.98, 30518813, 11191808238671.67], ["2026-07-21", 3700.94, 3931.52, 3595.01, 3932.95, 33313428, 12725152063248.0], ["2026-07-22", 3887.66, 3789.4, 3776.29, 3938.11, 26814420, 10282257493200.0], ["2026-07-23", 3828.12, 3808.16, 3766.38, 3857.29, 22285641, 8492188645101.0], ["2026-07-24", 3742.1, 3703.93, 3703.93, 3794.05, 21506709, 8030540620473.0], ["2026-07-27", 3706.7, 3822.48, 3668.57, 3824.63, 20899056, 7882900999936.0], ["2026-07-28", 3690.57, 3510.01, 3494.96, 3726.01, 20149859, 7207591131060.67], ["2026-07-29", 3516.38, 3569.36, 3418.7, 3605.11, 25357271, 8953796081302.33], ["2026-07-30", 3512.18, 3414.26, 3314.54, 3536.52, 27559613, 9430274884038.67], ["2026-07-31", 3604.64, 3520.13, 3520.13, 3656.12, 33540746, 11958818823316.0], ["2026-08-03", 3493.11, 3493.42, 3457.52, 3536.46, 26083706, 9118341943480.0], ["2026-08-04", 3552.46, 3705.48, 3541.86, 3729.75, 28867180, 10562587763540.0], ["2026-08-05", 3560.16, 3733.92, 3560.05, 3791.49, 33205684, 12270009391821.33], ["2026-08-06", 3663.59, 3703.04, 3626.83, 3772.77, 28354813, 10493776033544.0], ["2026-08-07", 3730.1, 3737.08, 3695.89, 3802.41, 32032738, 11996666129014.67]];
+var FUND_DATES = ["2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07"];
+var FUND_VALS = [-224147.807, 383141.007, -216449.021, -51659.868, -707181.6, -153653.288, 792816.301, -259882.454, -44278.676, -81912.759, 246225.019, -352629.175, 134903.542, -262917.196, -280371.904, 809.218, 454976.884, 598859.835, 112998.306, 22448.924];
+var FUND_JUMBO = [];
+var FUND_TITLE = '量价资金强度估算（百万，非真实主力资金）';
+var FUND_YUNIT = 'M';
+var UP_COLOR = '#ef5350', DOWN_COLOR = '#26a69a';
+
+function makeKline(domId, kdata) {
+  var dom = document.getElementById(domId);
+  if (!dom || !kdata.length) return;
+  var chart = echarts.init(dom);
+  var dates = [], ohlc = [], vols = [];
+  kdata.forEach(function(r) {
+    dates.push(r[0]); ohlc.push([r[1], r[2], r[3], r[4]]); vols.push(r[5]);
+  });
+
+  var markLines = [
+    { name: '高点 4704.42', yAxis: 4704.42, lineStyle: { color: '#ef5350', type: 'dashed', width: 1, opacity: 0.7 } },
+    { name: '低点 3314.54', yAxis: 3314.54, lineStyle: { color: '#26a69a', type: 'dashed', width: 1, opacity: 0.7 } },
+    { name: '现价 3737.08', yAxis: 3737.08, lineStyle: { color: '#ff9800', type: 'solid', width: 1.5, opacity: 0.8 } }
+  ];
+
+  var maLine = function(period, color) {
+    return { name: 'MA'+period, type: 'line', data: ohlc.map(function(d,i) {
+      if (i < period-1) return null;
+      var sum = 0; for (var j=i-period+1; j<=i; j++) sum += ohlc[j][1];
+      return sum/period;
+    }), smooth: true, symbol: 'none', lineStyle: { color: color, width: 1, opacity: 0.6 } };
+  };
+
+  chart.setOption({
+    backgroundColor: '#141722',
+    tooltip: { trigger: 'axis', axisPointer: { type: 'cross' }, backgroundColor: 'rgba(20,23,34,0.95)', borderColor: '#2a2e39', textStyle: { color: '#d1d4dc', fontSize: 12 } },
+    grid: [{ left: '3%', right: '8%', top: '2%', height: '62%' }, { left: '3%', right: '8%', top: '72%', height: '16%' }],
+    xAxis: [{ type: 'category', data: dates, boundaryGap: true, axisLine: { lineStyle: { color: '#2a2e39' } }, axisLabel: { color: '#787b86', fontSize: 10, formatter: function(v){return v.slice(5)} }, splitLine: { show: false } },
+            { type: 'category', gridIndex: 1, data: dates, boundaryGap: true, axisLine: { show: false }, axisLabel: { show: false }, splitLine: { show: false } }],
+    yAxis: [{ scale: true, splitLine: { lineStyle: { color: '#1e222d' } }, axisLabel: { color: '#787b86', fontSize: 10 } },
+            { scale: true, gridIndex: 1, splitNumber: 2, axisLabel: { color: '#787b86', fontSize: 9, formatter: function(v){return (v/1e6).toFixed(0)+'M'} }, axisLine: { show: false }, splitLine: { show: false } }],
+    dataZoom: [{ type: 'inside', xAxisIndex: [0,1], start: 0, end: 100 }],
+    series: [
+      { name: 'K线', type: 'candlestick', data: ohlc, itemStyle: { color: UP_COLOR, color0: DOWN_COLOR, borderColor: UP_COLOR, borderColor0: DOWN_COLOR },
+         markLine: { silent: true, symbol: 'none', data: markLines } },
+      { name: '成交量', type: 'bar', xAxisIndex: 1, yAxisIndex: 1, data: vols.map(function(v,i){return {value:v,itemStyle:{color:ohlc[i][1]>=ohlc[i][0]?UP_COLOR:DOWN_COLOR}};}) },
+      maLine(5, '#4285f4'), maLine(10, '#ce93d8'), maLine(20, '#ff9800'), maLine(60, '#22ab94')
+    ]
+  });
+  window.addEventListener('resize', function(){ chart.resize(); });
+}
+
+// 资金流逐日柱状图（真实数据：东方财富主力净流入；美股为量价强度估算）
+function makeFundChart(domId) {
+  var dom = document.getElementById(domId);
+  if (!dom) return;
+  if (!FUND_DATES.length) {
+    dom.innerHTML = '<div style="color:#787b86;font-size:12px;text-align:center;padding:80px 0">'
+      + '该标的暂无资金流数据（港股/部分ETF不提供主力资金明细）</div>';
+    return;
+  }
+  var chart = echarts.init(dom);
+  // 累计曲线
+  var cum = [], s = 0;
+  for (var i = 0; i < FUND_VALS.length; i++) { s += FUND_VALS[i]; cum.push(+s.toFixed(3)); }
+
+  var series = [
+    { name: '当日净流入', type: 'bar', data: FUND_VALS.map(function(v){
+        return { value: v, itemStyle: { color: v >= 0 ? UP_COLOR : DOWN_COLOR } };
+      }) },
+    { name: '累计净流入', type: 'line', yAxisIndex: 1, data: cum, smooth: true,
+       symbol: 'none', lineStyle: { color: '#d6a64a', width: 2 } }
+  ];
+  if (FUND_JUMBO.length) {
+    series.push({ name: '超大单', type: 'line', data: FUND_JUMBO, smooth: true,
+      symbol: 'none', lineStyle: { color: '#5b9bd5', width: 1, type: 'dashed' } });
+  }
+
+  chart.setOption({
+    backgroundColor: '#141722',
+    title: { text: FUND_TITLE, textStyle: { color: '#787b86', fontSize: 12 }, left: 'center' },
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: 'rgba(20,23,34,0.95)', borderColor: '#2a2e39',
+      textStyle: { color: '#d1d4dc', fontSize: 12 } },
+    legend: { data: series.map(function(x){return x.name}), top: 24,
+      textStyle: { color: '#787b86', fontSize: 10 } },
+    grid: { left: '3%', right: '4%', top: '22%', bottom: '5%', containLabel: true },
+    xAxis: { type: 'category', data: FUND_DATES,
+      axisLine: { lineStyle: { color: '#2a2e39' } },
+      axisLabel: { color: '#787b86', fontSize: 10, formatter: function(v){return v.slice(5)} } },
+    yAxis: [
+      { type: 'value', name: '当日', nameTextStyle: { color: '#787b86', fontSize: 10 },
+        axisLabel: { color: '#787b86', fontSize: 10, formatter: function(v){return v.toFixed(1)+FUND_YUNIT} },
+        splitLine: { lineStyle: { color: '#1e222d' } } },
+      { type: 'value', name: '累计', nameTextStyle: { color: '#d6a64a', fontSize: 10 },
+        axisLabel: { color: '#d6a64a', fontSize: 10, formatter: function(v){return v.toFixed(1)+FUND_YUNIT} },
+        splitLine: { show: false } }
+    ],
+    series: series
+  });
+  window.addEventListener('resize', function(){ chart.resize(); });
+}
+
+setTimeout(function() {
+  makeKline('dayChart', DAY_DATA);
+  makeFundChart('fundChart');
+}, 300);
+</script>
+</body>
+</html>

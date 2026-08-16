@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Veracyte(usVCYT) - 持仓深度分析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f1117;color:#d1d4dc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif}
+.header{padding:14px 20px;border-bottom:1px solid #2a2e39;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:16px;color:#fff} .header a{color:#5b9bd5;text-decoration:none;font-size:12px}
+.container{max-width:1400px;margin:0 auto;padding:16px 20px;display:grid;grid-template-columns:320px 1fr;gap:16px}
+@media(max-width:768px){.container{grid-template-columns:1fr}}
+.card{background:#141722;border:1px solid #2a2e39;border-radius:10px;padding:16px;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title .dot{width:8px;height:8px;border-radius:50%}
+.gauge-wrap{text-align:center;padding:16px 0}
+.gauge-val{font-size:48px;font-weight:700;color:#d6a64a}
+.gauge-label{font-size:12px;color:#787b86;margin-top:4px}
+.rating-tag{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600;margin-top:4px}
+.rating-recommend{background:rgba(34,171,148,0.2);color:#22ab94}
+.rating-watch{background:rgba(214,166,74,0.2);color:#d6a64a}
+.rating-avoid{background:rgba(239,83,80,0.2);color:#ef5350}
+.signal-card{text-align:center;padding:12px;background:#1a1d27;border-radius:8px;margin-bottom:8px}
+.signal-icon{font-size:32px;margin-bottom:4px}
+.signal-label{font-size:14px;font-weight:600}
+.signal-advice{font-size:11px;color:#787b86;margin-top:4px;line-height:1.4}
+.score-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid #1e222d}
+.score-row .s-label{color:#787b86}
+.score-row .s-val{color:#fff;font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.fund-metric{padding:8px;background:#1a1d27;border-radius:6px;text-align:center}
+.fund-metric .fm-label{font-size:10px;color:#787b86;margin-bottom:2px}
+.fund-metric .fm-val{font-size:13px;font-weight:600}
+.flow-up{color:#ef5350}.flow-down{color:#26a69a}
+.chart-wrap{width:100%;height:360px;margin-top:8px}
+.news-item{padding:8px 0;border-bottom:1px solid #1e222d;font-size:12px}
+.news-item .news-time{color:#787b86;font-size:10px}
+.news-item .news-title{color:#d1d4dc;font-weight:500;margin:2px 0}
+.news-item .news-summary{color:#787b86;font-size:11px;line-height:1.5}
+.warn{font-size:11px;color:#ef9a9a;padding:8px 12px;background:rgba(239,83,80,0.08);border-radius:6px;margin-top:10px}
+.advice-section{font-size:12px;line-height:1.9;color:#d1d4dc}
+.advice-section strong{color:#fff}
+.build-bar{margin:6px 0}
+.build-bar .bar-label{display:flex;justify-content:space-between;font-size:11px;color:#787b86;margin-bottom:2px}
+.build-bar .bar-track{height:8px;background:#1a1d27;border-radius:4px;overflow:hidden}
+.build-bar .bar-fill{height:100%;border-radius:4px}
+.num-up{color:#ef5350}.num-down{color:#26a69a}
+.footer{text-align:center;padding:12px;color:#787b86;font-size:10px;border-top:1px solid #2a2e39;margin-top:20px}
+.fund-table{width:100%;font-size:11px;border-collapse:collapse;margin-top:8px}
+.fund-table td{padding:4px 8px;border-bottom:1px solid #1e222d}
+.fund-table .ft-label{color:#787b86}
+.fund-table .ft-val{text-align:right;font-weight:600}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Veracyte <span style="color:#787b86;font-size:13px">usVCYT</span> <span style="font-size:12px;color:#d6a64a">🇺🇸 美股</span></h1>
+  <a href="index.html">← 返回列表</a>
+</div>
+<div class="container">
+<div class="sidebar">
+  <div class="card">
+    <div class="signal-card">
+      <div class="signal-icon">⚪ </div>
+      <div class="signal-label">中性</div>
+      <div class="signal-advice">趋势不明朗，建议观望</div>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge-val">55</div>
+      <div class="gauge-label">综合评分 / 100</div>
+      <span class="rating-tag rating-watch">观望等待</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ef5350"></span> 涨跌幅</div>
+    <div class="score-row"><span class="s-label">今日</span><span class="s-val num-up">+2.32%</span></div>
+    <div class="score-row"><span class="s-label">5日</span><span class="s-val num-up">+1.94%</span></div>
+    <div class="score-row"><span class="s-label">10日</span><span class="s-val num-down">-16.59%</span></div>
+    <div class="score-row"><span class="s-label">20日</span><span class="s-val num-down">-17.11%</span></div>
+    <div class="score-row"><span class="s-label">60日</span><span class="s-val num-up">+19.36%</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#5b9bd5"></span> 基本信息</div>
+    <div class="score-row"><span class="s-label">最新价</span><span class="s-val" style="color:#fff;font-weight:700">$47.22</span></div>
+    <div class="score-row"><span class="s-label">PE(TTM)</span><span class="s-val">33.7</span></div>
+    <div class="score-row"><span class="s-label">总市值</span><span class="s-val">32亿</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ff9800"></span> 资金概览</div>
+    <div class="score-row"><span class="s-label">当日主力</span><span class="s-val" style="color:#ef5350">--</span></div>
+    <div class="score-row"><span class="s-label">5日累计</span><span class="s-val" style="color:#ef5350">--</span></div>
+    <div class="score-row"><span class="s-label">20日累计</span><span class="s-val" style="color:#ef5350">--</span></div>
+    <div class="score-row"><span class="s-label">超大单</span><span class="s-val" style="color:#ef5350">--</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#d6a64a"></span> 风控参考</div>
+    <div class="score-row"><span class="s-label">止损位</span><span class="s-val" style="color:#ef5350">$42.50 (-10%)</span></div>
+    <div class="score-row"><span class="s-label">支撑位</span><span class="s-val" style="color:#26a69a">$38.41</span></div>
+    <div class="score-row"><span class="s-label">阻力位</span><span class="s-val" style="color:#ef5350">$59.28</span></div>
+  </div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ef5350"></span> 📊 大资金走向分析</div>
+    <div class="chart-wrap" id="fundChart"></div>
+    <div style="margin-top:12px;font-size:12px;line-height:1.8;color:#d1d4dc;background:#1a1d27;padding:10px;border-radius:6px">
+      该市场不提供主力资金明细，以下为基于近 20 个交易日「(收盘-开盘)/开盘 × 成交额」的资金强度估算：累计强度 <span style="color:#26a69a;font-weight:600">-3.3M</span>，其中 11/20 日为净流入方向。<span style="color:#787b86">（估算指标，仅供参考）</span>
+    </div>
+    <div style="color:#787b86;font-size:11px;padding:8px 0">暂无资金流向详细数据</div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#4285f4"></span> 📈 技术面分析（60日K线）</div>
+    <div class="chart-wrap" id="dayChart"></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#22ab94"></span> 📰 核心新闻</div>
+    <div id="newsContent">
+      <div class="news-item">
+        <div class="news-title"><a href="https://quote.eastmoney.com/us/VCYT.html" target="_blank" style="color:#5b9bd5;text-decoration:none">📈 东方财富 · Veracyte 个股页</a></div>
+        <div class="news-summary">实时行情、公告、研报与资金流详情</div>
+      </div>
+      <div class="news-item">
+        <div class="news-title"><a href="https://xueqiu.com/S/VCYT" target="_blank" style="color:#5b9bd5;text-decoration:none">💬 雪球 · Veracyte 讨论与新闻</a></div>
+        <div class="news-summary">市场观点、公司动态与投资者讨论</div>
+      </div>
+    </div>
+  </div>
+  <div class="warn">
+    ⚠️ <strong>风险提示</strong>：本页面仅为数据分析展示，不构成投资建议。所有交易决策请结合自身风险承受能力。止损建议严格设在 -10%。
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ff9800"></span> 🎯 操作建议</div>
+    <div class="advice-section">
+      <p><strong>📊 综合判断</strong>：趋势不明朗，PE=33.7，缺乏明确交易信号。</p><p style="margin-top:8px"><strong>🎯 操作建议</strong>：建议观望，等待更明确的方向信号。</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <a href="index.html">← 返回列表</a> | 持仓股票趋势分析 | 数据: 东方财富 + 腾讯行情 | 生成: 2026-08-08 | <a href="https://zbdba.github.io/stock-screener/" style="color:#5b9bd5">GitHub Pages</a>
+</div>
+<script>
+var DAY_DATA = [["2026-05-13", 39.1, 38.25, 37.66, 39.37, 1107418, 42554382.35], ["2026-05-14", 38.88, 38.9, 38.05, 39.66, 902960, 35098055.2], ["2026-05-15", 38.17, 38.48, 37.72, 39.57, 944926, 36464694.34], ["2026-05-18", 39.22, 41.5, 39.05, 42.23, 1489598, 60964280.81], ["2026-05-19", 41.37, 41.69, 40.62, 42.36, 978533, 40664569.7], ["2026-05-20", 42.16, 45.19, 41.86, 45.38, 1181491, 52154951.04], ["2026-05-21", 44.19, 45.19, 43.68, 45.57, 1114919, 49963236.79], ["2026-05-22", 45.46, 45.03, 44.81, 46.0, 1398669, 63331732.32], ["2026-05-26", 45.35, 44.21, 43.95, 45.52, 941110, 41935861.6], ["2026-05-27", 44.34, 44.49, 43.05, 44.67, 1028890, 45343182.3], ["2026-05-28", 44.35, 47.99, 44.35, 48.35, 999429, 46869888.67], ["2026-05-29", 48.09, 46.34, 46.27, 48.09, 1232886, 57822353.4], ["2026-06-01", 46.18, 48.18, 44.93, 49.25, 1527106, 72466270.05], ["2026-06-02", 48.17, 47.8, 46.36, 48.17, 1783709, 84625100.66], ["2026-06-03", 47.77, 48.69, 46.49, 49.4, 1451705, 69962502.97], ["2026-06-04", 49.3, 49.94, 48.7, 50.54, 1645077, 81804195.62], ["2026-06-05", 49.44, 48.73, 47.95, 49.75, 1168573, 57038048.13], ["2026-06-08", 48.87, 47.27, 47.14, 49.71, 1045929, 50246429.16], ["2026-06-09", 47.99, 49.24, 46.89, 49.32, 1009574, 48947512.77], ["2026-06-10", 48.64, 48.17, 48.13, 50.06, 1390906, 67857667.39], ["2026-06-11", 48.63, 47.42, 46.76, 48.63, 1042402, 49621809.87], ["2026-06-12", 47.51, 47.33, 46.04, 48.63, 1082559, 51241126.0], ["2026-06-15", 47.44, 49.15, 46.68, 49.62, 1426908, 69181256.2], ["2026-06-16", 49.66, 50.92, 49.42, 52.45, 1770406, 90166777.58], ["2026-06-17", 51.15, 51.29, 50.5, 52.76, 1229330, 63330983.83], ["2026-06-18", 51.96, 53.63, 51.92, 53.81, 4155447, 220737344.64], ["2026-06-22", 53.72, 53.19, 52.36, 54.72, 967185, 51670246.65], ["2026-06-23", 52.79, 53.79, 52.65, 54.12, 844898, 45218940.96], ["2026-06-24", 54.45, 56.76, 54.44, 58.05, 1304513, 73596275.08], ["2026-06-25", 56.96, 58.55, 56.82, 60.28, 1511960, 88525258.0], ["2026-06-26", 58.55, 60.49, 58.06, 60.83, 3333219, 199304274.74], ["2026-06-29", 59.7, 60.19, 58.73, 60.82, 1486408, 89055657.97], ["2026-06-30", 60.42, 58.73, 58.27, 60.91, 1324350, 78538369.5], ["2026-07-01", 58.99, 59.85, 58.75, 60.71, 1230120, 73524272.4], ["2026-07-02", 59.92, 57.08, 56.5, 60.58, 1150166, 66770970.19], ["2026-07-06", 56.04, 58.0, 56.01, 59.96, 894569, 51876056.31], ["2026-07-07", 58.15, 56.16, 55.46, 59.24, 1136485, 64726609.03], ["2026-07-08", 55.18, 56.12, 54.25, 56.39, 1358752, 75528494.51], ["2026-07-09", 56.98, 59.3, 56.7, 59.86, 741126, 43444806.12], ["2026-07-10", 59.1, 56.97, 56.45, 59.14, 757211, 43554776.72], ["2026-07-13", 55.93, 57.48, 55.62, 57.7, 853207, 48575918.53], ["2026-07-14", 57.74, 56.62, 55.82, 58.01, 973638, 55318865.7], ["2026-07-15", 57.6, 59.51, 56.93, 59.56, 908855, 53319493.33], ["2026-07-16", 59.38, 59.22, 58.17, 60.82, 834391, 49565606.7], ["2026-07-17", 57.06, 59.13, 57.06, 59.19, 2010249, 117519156.54], ["2026-07-20", 58.86, 57.26, 56.57, 59.83, 1847994, 106974212.68], ["2026-07-21", 56.42, 59.53, 55.05, 59.73, 864532, 50232190.97], ["2026-07-22", 58.85, 58.01, 57.5, 59.55, 610075, 35599909.83], ["2026-07-23", 57.59, 57.88, 57.41, 59.09, 615699, 35788530.54], ["2026-07-24", 58.55, 56.61, 56.35, 58.55, 589882, 33723553.94], ["2026-07-27", 57.78, 55.61, 55.21, 58.09, 748902, 42165678.94], ["2026-07-28", 55.6, 55.65, 54.72, 56.63, 740194, 41204132.67], ["2026-07-29", 56.03, 55.71, 55.07, 57.55, 929258, 52140666.38], ["2026-07-30", 55.36, 59.78, 54.73, 59.96, 1551154, 90209946.13], ["2026-07-31", 48.77, 46.32, 43.52, 50.17, 5994803, 279777456.01], ["2026-08-03", 46.36, 44.85, 44.81, 47.32, 2010947, 91819840.02], ["2026-08-04", 44.84, 46.41, 43.09, 46.57, 1987140, 90130046.6], ["2026-08-05", 46.07, 46.15, 45.92, 47.96, 1227696, 57304756.96], ["2026-08-06", 45.8, 46.15, 45.16, 46.53, 939858, 43183342.24], ["2026-08-07", 47.0, 47.22, 46.21, 47.8, 821473, 38672210.6]];
+var FUND_DATES = ["2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07"];
+var FUND_VALS = [1.346, -1.073, 1.768, -0.134, 4.263, -2.908, 2.769, -0.508, 0.18, -1.117, -1.584, 0.037, -0.298, 7.202, -14.055, -2.991, 3.156, 0.1, 0.33, 0.181];
+var FUND_JUMBO = [];
+var FUND_TITLE = '量价资金强度估算（百万，非真实主力资金）';
+var FUND_YUNIT = 'M';
+var UP_COLOR = '#ef5350', DOWN_COLOR = '#26a69a';
+
+function makeKline(domId, kdata) {
+  var dom = document.getElementById(domId);
+  if (!dom || !kdata.length) return;
+  var chart = echarts.init(dom);
+  var dates = [], ohlc = [], vols = [];
+  kdata.forEach(function(r) {
+    dates.push(r[0]); ohlc.push([r[1], r[2], r[3], r[4]]); vols.push(r[5]);
+  });
+
+  var markLines = [
+    { name: '高点 $60.49', yAxis: 60.49, lineStyle: { color: '#ef5350', type: 'dashed', width: 1, opacity: 0.7 } },
+    { name: '低点 $37.66', yAxis: 37.66, lineStyle: { color: '#26a69a', type: 'dashed', width: 1, opacity: 0.7 } },
+    { name: '现价 $47.22', yAxis: 47.22, lineStyle: { color: '#ff9800', type: 'solid', width: 1.5, opacity: 0.8 } }
+  ];
+
+  var maLine = function(period, color) {
+    return { name: 'MA'+period, type: 'line', data: ohlc.map(function(d,i) {
+      if (i < period-1) return null;
+      var sum = 0; for (var j=i-period+1; j<=i; j++) sum += ohlc[j][1];
+      return sum/period;
+    }), smooth: true, symbol: 'none', lineStyle: { color: color, width: 1, opacity: 0.6 } };
+  };
+
+  chart.setOption({
+    backgroundColor: '#141722',
+    tooltip: { trigger: 'axis', axisPointer: { type: 'cross' }, backgroundColor: 'rgba(20,23,34,0.95)', borderColor: '#2a2e39', textStyle: { color: '#d1d4dc', fontSize: 12 } },
+    grid: [{ left: '3%', right: '8%', top: '2%', height: '62%' }, { left: '3%', right: '8%', top: '72%', height: '16%' }],
+    xAxis: [{ type: 'category', data: dates, boundaryGap: true, axisLine: { lineStyle: { color: '#2a2e39' } }, axisLabel: { color: '#787b86', fontSize: 10, formatter: function(v){return v.slice(5)} }, splitLine: { show: false } },
+            { type: 'category', gridIndex: 1, data: dates, boundaryGap: true, axisLine: { show: false }, axisLabel: { show: false }, splitLine: { show: false } }],
+    yAxis: [{ scale: true, splitLine: { lineStyle: { color: '#1e222d' } }, axisLabel: { color: '#787b86', fontSize: 10 } },
+            { scale: true, gridIndex: 1, splitNumber: 2, axisLabel: { color: '#787b86', fontSize: 9, formatter: function(v){return (v/1e6).toFixed(0)+'M'} }, axisLine: { show: false }, splitLine: { show: false } }],
+    dataZoom: [{ type: 'inside', xAxisIndex: [0,1], start: 0, end: 100 }],
+    series: [
+      { name: 'K线', type: 'candlestick', data: ohlc, itemStyle: { color: UP_COLOR, color0: DOWN_COLOR, borderColor: UP_COLOR, borderColor0: DOWN_COLOR },
+         markLine: { silent: true, symbol: 'none', data: markLines } },
+      { name: '成交量', type: 'bar', xAxisIndex: 1, yAxisIndex: 1, data: vols.map(function(v,i){return {value:v,itemStyle:{color:ohlc[i][1]>=ohlc[i][0]?UP_COLOR:DOWN_COLOR}};}) },
+      maLine(5, '#4285f4'), maLine(10, '#ce93d8'), maLine(20, '#ff9800'), maLine(60, '#22ab94')
+    ]
+  });
+  window.addEventListener('resize', function(){ chart.resize(); });
+}
+
+// 资金流逐日柱状图（真实数据：东方财富主力净流入；美股为量价强度估算）
+function makeFundChart(domId) {
+  var dom = document.getElementById(domId);
+  if (!dom) return;
+  if (!FUND_DATES.length) {
+    dom.innerHTML = '<div style="color:#787b86;font-size:12px;text-align:center;padding:80px 0">'
+      + '该标的暂无资金流数据（港股/部分ETF不提供主力资金明细）</div>';
+    return;
+  }
+  var chart = echarts.init(dom);
+  // 累计曲线
+  var cum = [], s = 0;
+  for (var i = 0; i < FUND_VALS.length; i++) { s += FUND_VALS[i]; cum.push(+s.toFixed(3)); }
+
+  var series = [
+    { name: '当日净流入', type: 'bar', data: FUND_VALS.map(function(v){
+        return { value: v, itemStyle: { color: v >= 0 ? UP_COLOR : DOWN_COLOR } };
+      }) },
+    { name: '累计净流入', type: 'line', yAxisIndex: 1, data: cum, smooth: true,
+       symbol: 'none', lineStyle: { color: '#d6a64a', width: 2 } }
+  ];
+  if (FUND_JUMBO.length) {
+    series.push({ name: '超大单', type: 'line', data: FUND_JUMBO, smooth: true,
+      symbol: 'none', lineStyle: { color: '#5b9bd5', width: 1, type: 'dashed' } });
+  }
+
+  chart.setOption({
+    backgroundColor: '#141722',
+    title: { text: FUND_TITLE, textStyle: { color: '#787b86', fontSize: 12 }, left: 'center' },
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: 'rgba(20,23,34,0.95)', borderColor: '#2a2e39',
+      textStyle: { color: '#d1d4dc', fontSize: 12 } },
+    legend: { data: series.map(function(x){return x.name}), top: 24,
+      textStyle: { color: '#787b86', fontSize: 10 } },
+    grid: { left: '3%', right: '4%', top: '22%', bottom: '5%', containLabel: true },
+    xAxis: { type: 'category', data: FUND_DATES,
+      axisLine: { lineStyle: { color: '#2a2e39' } },
+      axisLabel: { color: '#787b86', fontSize: 10, formatter: function(v){return v.slice(5)} } },
+    yAxis: [
+      { type: 'value', name: '当日', nameTextStyle: { color: '#787b86', fontSize: 10 },
+        axisLabel: { color: '#787b86', fontSize: 10, formatter: function(v){return v.toFixed(1)+FUND_YUNIT} },
+        splitLine: { lineStyle: { color: '#1e222d' } } },
+      { type: 'value', name: '累计', nameTextStyle: { color: '#d6a64a', fontSize: 10 },
+        axisLabel: { color: '#d6a64a', fontSize: 10, formatter: function(v){return v.toFixed(1)+FUND_YUNIT} },
+        splitLine: { show: false } }
+    ],
+    series: series
+  });
+  window.addEventListener('resize', function(){ chart.resize(); });
+}
+
+setTimeout(function() {
+  makeKline('dayChart', DAY_DATA);
+  makeFundChart('fundChart');
+}, 300);
+</script>
+</body>
+</html>

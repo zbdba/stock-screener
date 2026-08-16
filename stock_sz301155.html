@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>海力风电(sz301155) - 深度分析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f1117;color:#d1d4dc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif}
+.header{padding:14px 20px;border-bottom:1px solid #2a2e39;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:16px;color:#fff} .header a{color:#5b9bd5;text-decoration:none;font-size:12px}
+.container{max-width:1400px;margin:0 auto;padding:16px 20px;display:grid;grid-template-columns:320px 1fr;gap:16px}
+@media(max-width:768px){.container{grid-template-columns:1fr}}
+.card{background:#141722;border:1px solid #2a2e39;border-radius:10px;padding:16px}
+.card-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title .dot{width:8px;height:8px;border-radius:50%}
+.gauge-wrap{text-align:center;padding:20px 0}
+.gauge-val{font-size:48px;font-weight:700;color:#22ab94}
+.gauge-label{font-size:12px;color:#787b86;margin-top:4px}
+.gauge-bar{display:flex;gap:4px;margin-top:12px}
+.gauge-bar div{flex:1;height:6px;border-radius:3px;position:relative}
+.gauge-bar .bar-val{background:#22ab94;opacity:0.2}
+.gauge-bar .bar-fill{position:absolute;top:0;left:0;height:100%;border-radius:3px}
+.score-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid #1e222d}
+.score-row .s-label{color:#787b86}
+.score-row .s-val{color:#fff;font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.met{text-align:center;padding:8px;background:#1a1d27;border-radius:6px}
+.met .m-label{font-size:10px;color:#787b86}
+.met .m-val{font-size:14px;color:#fff;font-weight:600;margin-top:2px}
+.chart-wrap{width:100%;height:380px;margin-top:8px}
+.warn{font-size:11px;color:#ef9a9a;padding:8px 12px;background:rgba(239,83,80,0.08);border-radius:6px;margin-top:10px}
+.build-bar{margin:6px 0}
+.build-bar .bar-label{display:flex;justify-content:space-between;font-size:11px;color:#787b86;margin-bottom:2px}
+.build-bar .bar-track{height:8px;background:#1a1d27;border-radius:4px;overflow:hidden}
+.build-bar .bar-fill{height:100%;border-radius:4px}
+.rating-tag{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600;margin-top:4px}
+.rating-recommend{background:rgba(34,171,148,0.2);color:#22ab94}
+.rating-watch{background:rgba(214,166,74,0.2);color:#d6a64a}
+.rating-avoid{background:rgba(239,83,80,0.2);color:#ef5350}
+.num-up{color:#ef5350}.num-down{color:#26a69a}
+.footer{text-align:center;padding:12px;color:#787b86;font-size:10px;border-top:1px solid #2a2e39;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>海力风电 <span style="color:#787b86;font-size:13px">sz301155</span></h1>
+  <a href="index.html">← 返回列表</a>
+</div>
+<div class="container">
+<div class="sidebar">
+  <div class="card">
+    <div class="gauge-wrap">
+      <div class="gauge-val">75</div>
+      <div class="gauge-label">综合评分 / 100</div>
+      <span class="rating-tag rating-recommend">强烈推荐</span>
+    </div>
+    <div class="score-row"><span class="s-label">估值评分</span><span class="s-val">10/35</span></div>
+    <div class="score-row"><span class="s-label">技术评分</span><span class="s-val">35/35</span></div>
+    <div class="score-row"><span class="s-label">反弹评分</span><span class="s-val">30/30</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#5b9bd5"></span> 估值面板</div>
+    <div class="grid2">
+      <div class="met"><div class="m-label">PE(TTM)</div><div class="m-val">36.9</div></div>
+      <div class="met"><div class="m-label">PB</div><div class="m-val">0.00</div></div>
+      <div class="met"><div class="m-label">PS(TTM)</div><div class="m-val">0.00</div></div>
+      <div class="met"><div class="m-label">PCF(TTM)</div><div class="m-val">0.00</div></div>
+      <div class="met"><div class="m-label">股息率</div><div class="m-val">0.00%</div></div>
+      <div class="met"><div class="m-label">总市值</div><div class="m-val" style="font-size:11px">62亿</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ef5350"></span> 涨跌幅</div>
+    <div class="score-row"><span class="s-label">今日</span><span class="s-val num-up">+8.19%</span></div>
+    <div class="score-row"><span class="s-label">5日</span><span class="s-val num-up">+18.54%</span></div>
+    <div class="score-row"><span class="s-label">10日</span><span class="s-val num-up">+29.49%</span></div>
+    <div class="score-row"><span class="s-label">20日</span><span class="s-val num-up">+22.73%</span></div>
+    <div class="score-row"><span class="s-label">60日</span><span class="s-val num-down">-24.68%</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#d6a64a"></span> 建仓分析</div>
+    <div class="build-bar">
+      <div class="bar-label"><span>支撑位</span><span>¥38.09</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:73%;background:linear-gradient(90deg,#26a69a,#ef5350)"></div></div>
+    </div>
+    <div class="build-bar">
+      <div class="bar-label"><span>当前价</span><span style="color:#fff;font-weight:600">¥60.50</span></div>
+    </div>
+    <div class="build-bar">
+      <div class="bar-label"><span>阻力位</span><span>¥68.93</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:27%;background:linear-gradient(90deg,#ef5350,#26a69a)"></div></div>
+    </div>
+    <div class="score-row"><span class="s-label">止损建议</span><span class="s-val" style="color:#ef5350">¥54.45 (-10%)</span></div>
+    <div class="score-row"><span class="s-label">反弹空间</span><span class="s-val" style="color:#22ab94">46.9% (高点→低点)</span></div>
+    <div class="score-row"><span class="s-label">已反弹</span><span class="s-val" style="color:#d6a64a">62.0% (低点→现价)</span></div>
+  </div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#4285f4"></span> 日K线图（最近60个交易日）</div>
+    <div class="chart-wrap" id="dayChart"></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ce93d8"></span> 周K线图（最近60周）</div>
+    <div class="chart-wrap" id="weekChart"></div>
+  </div>
+  <div class="warn">
+    ⚠️ <strong>风险提示</strong>：本页面仅为数据展示，不构成投资建议。深度超跌反弹具有较高不确定性，请结合基本面综合判断。止损位建议严格设在 -10%。
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#22ab94"></span> 操作参考</div>
+    <div style="font-size:12px;line-height:1.8;color:#d1d4dc">
+      <p><strong>📊 当前状态</strong>：海力风电 60日跌幅 -24.7%，近期10日回升 29.5%，已出现明显反弹信号。</p>
+      <p style="margin-top:8px"><strong>🎯 建议</strong>：可以小仓位试探性建仓，等待周线确认后加仓。</p>
+      <p style="margin-top:8px"><strong>🛡 风控</strong>：若建仓，止损设在 ¥54.45（-10%），止盈目标为阻力位 ¥68.93。</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <a href="index.html">← 返回列表</a> | 数据: westock-data | 生成: 2026-08-08 | <a href="https://zbdba.github.io/stock-screener/">GitHub Pages</a>
+</div>
+<script>
+var DAY_DATA = [["2026-07-24", 39.49, 38.86, 38.72, 41.5, 43647], ["2026-07-23", 38.6, 39.79, 38.22, 40.08, 35031], ["2026-07-22", 38.65, 38.49, 38.03, 39.21, 26781], ["2026-07-21", 38.23, 38.72, 37.95, 39.23, 40283], ["2026-07-20", 37.79, 38.5, 37.34, 39.12, 34959], ["2026-07-17", 39.23, 37.81, 37.7, 39.77, 37267], ["2026-07-16", 38.23, 39.32, 38.08, 40.18, 32585], ["2026-07-15", 38.55, 38.71, 38.25, 39.25, 26794], ["2026-07-14", 38.75, 38.58, 37.88, 38.85, 29264], ["2026-07-13", 41.48, 38.74, 38.61, 41.48, 40224], ["2026-07-10", 40.47, 41.0, 39.2, 42.42, 44944], ["2026-07-09", 40.58, 40.0, 39.43, 40.88, 29869], ["2026-07-08", 41.82, 40.6, 40.3, 42.17, 27990], ["2026-07-07", 43.52, 41.8, 41.73, 44.29, 31024], ["2026-07-06", 44.41, 43.84, 43.0, 45.3, 46692], ["2026-07-03", 43.2, 44.69, 42.91, 45.22, 43693], ["2026-07-02", 42.76, 43.09, 42.5, 43.8, 36549], ["2026-07-01", 42.74, 43.13, 41.69, 43.94, 43190], ["2026-06-30", 43.1, 42.9, 42.57, 44.56, 45754], ["2026-06-29", 42.78, 42.55, 41.11, 43.3, 54252], ["2026-06-26", 45.01, 43.6, 43.53, 48.0, 83520], ["2026-06-25", 44.16, 43.53, 43.3, 44.7, 28652], ["2026-06-24", 44.8, 44.33, 43.28, 45.0, 32402], ["2026-06-23", 45.05, 44.9, 44.59, 46.37, 29650], ["2026-06-22", 45.41, 45.55, 43.23, 45.88, 49492], ["2026-06-18", 45.62, 45.67, 45.01, 46.66, 30265], ["2026-06-17", 47.39, 45.72, 45.01, 47.47, 51465], ["2026-06-16", 47.0, 47.59, 46.2, 48.78, 41708], ["2026-06-15", 46.51, 47.0, 46.1, 47.0, 31943], ["2026-06-12", 46.95, 46.39, 45.95, 47.97, 38684], ["2026-06-11", 47.0, 46.21, 45.83, 47.5, 31466], ["2026-06-10", 47.44, 47.35, 46.32, 47.92, 33480], ["2026-06-09", 47.91, 47.98, 46.02, 48.28, 54232], ["2026-06-08", 50.72, 47.34, 46.84, 50.72, 59853], ["2026-06-05", 56.22, 50.97, 50.56, 56.34, 87297], ["2026-06-04", 55.87, 56.04, 55.64, 57.9, 28674], ["2026-06-03", 59.19, 56.84, 56.46, 59.19, 40723], ["2026-06-02", 60.84, 59.44, 57.4, 60.95, 61774], ["2026-06-01", 62.01, 60.97, 60.84, 63.4, 32649], ["2026-05-29", 66.16, 62.01, 61.85, 66.16, 59413], ["2026-05-28", 64.77, 66.17, 64.17, 67.84, 56139], ["2026-05-27", 66.2, 64.76, 64.17, 68.84, 46363], ["2026-05-26", 67.92, 66.34, 65.21, 68.34, 50727], ["2026-05-25", 70.84, 68.14, 67.53, 70.84, 52340], ["2026-05-22", 64.84, 70.34, 64.52, 71.34, 94596], ["2026-05-21", 68.44, 64.95, 64.89, 68.44, 59006], ["2026-05-20", 68.92, 68.64, 67.44, 70.54, 58853], ["2026-05-19", 69.74, 69.72, 68.45, 70.52, 62510], ["2026-05-18", 66.44, 70.52, 65.34, 71.72, 100759], ["2026-05-15", 66.84, 67.04, 65.96, 69.47, 76413], ["2026-05-14", 69.34, 66.81, 66.74, 70.74, 95668], ["2026-05-13", 61.43, 70.1, 61.2, 71.84, 147510], ["2026-05-12", 61.35, 61.55, 60.75, 62.74, 36045], ["2026-05-11", 60.35, 61.75, 60.35, 63.14, 53983], ["2026-05-08", 60.84, 60.34, 59.53, 60.85, 34898], ["2026-05-07", 62.25, 60.9, 60.69, 62.44, 44713], ["2026-05-06", 62.34, 62.05, 61.82, 63.43, 52604], ["2026-04-30", 61.45, 62.38, 60.65, 62.71, 44685], ["2026-04-29", 56.16, 61.56, 54.64, 63.74, 107685], ["2026-04-28", 63.29, 60.5, 60.09, 63.29, 60020]];
+var WEEK_DATA = [["2026-08-07", 42.39, 50.32, 42.27, 51.4, 325260], ["2026-07-31", 38.39, 42.45, 38.39, 45.12, 251482], ["2026-07-24", 37.79, 38.86, 37.34, 41.5, 180701], ["2026-07-17", 41.48, 37.81, 37.7, 41.48, 166134], ["2026-07-10", 44.41, 41.0, 39.2, 45.3, 180519], ["2026-07-03", 42.78, 44.69, 41.11, 45.22, 223438], ["2026-06-26", 45.41, 43.6, 43.23, 48.0, 223716], ["2026-06-18", 46.51, 45.67, 45.01, 48.78, 155381], ["2026-06-12", 50.72, 46.39, 45.83, 50.72, 217715], ["2026-06-05", 62.01, 50.97, 50.56, 63.4, 251117], ["2026-05-29", 70.84, 62.01, 61.85, 70.84, 264982], ["2026-05-22", 66.44, 70.34, 64.52, 71.72, 375724], ["2026-05-15", 60.35, 67.04, 60.35, 71.84, 409619], ["2026-05-08", 62.34, 60.34, 59.53, 63.43, 132215], ["2026-04-30", 62.97, 62.38, 54.64, 64.04, 240057], ["2026-04-24", 66.24, 63.55, 63.13, 67.29, 234169], ["2026-04-17", 65.34, 66.56, 64.43, 67.23, 235757], ["2026-04-10", 63.85, 65.9, 63.5, 67.68, 177589], ["2026-04-03", 74.0, 63.85, 62.95, 76.1, 316177], ["2026-03-27", 83.84, 75.45, 73.95, 90.83, 344340], ["2026-03-20", 87.78, 85.26, 81.64, 89.13, 344979], ["2026-03-13", 75.44, 85.26, 74.33, 93.6, 339325], ["2026-03-06", 76.24, 76.5, 73.87, 77.69, 133343], ["2026-02-27", 73.13, 77.36, 72.49, 80.12, 131401], ["2026-02-13", 72.38, 72.41, 71.15, 74.51, 122628], ["2026-02-06", 86.03, 71.84, 70.86, 87.46, 269154], ["2026-01-30", 88.72, 87.02, 85.52, 93.81, 207754], ["2026-01-23", 84.04, 88.57, 82.84, 91.48, 215952], ["2026-01-16", 81.33, 85.44, 76.85, 87.67, 294401], ["2026-01-09", 81.14, 81.42, 78.19, 83.84, 170103], ["2025-12-31", 80.61, 80.77, 79.02, 82.84, 68890], ["2025-12-26", 77.64, 81.05, 77.39, 82.59, 105630], ["2025-12-19", 81.59, 77.61, 77.12, 83.32, 99429], ["2025-12-12", 80.44, 82.13, 75.51, 85.82, 179427], ["2025-12-05", 78.44, 80.47, 76.07, 82.84, 143735], ["2025-11-28", 78.28, 78.44, 76.95, 80.64, 105509], ["2025-11-21", 85.35, 77.54, 77.07, 85.84, 103938], ["2025-11-14", 86.79, 86.4, 84.0, 89.34, 140032], ["2025-11-07", 84.87, 88.44, 79.86, 90.34, 250409], ["2025-10-31", 94.37, 85.29, 83.34, 94.84, 292557], ["2025-10-24", 87.85, 94.61, 85.67, 96.73, 183741], ["2025-10-17", 92.33, 86.33, 84.84, 100.71, 186473], ["2025-10-10", 95.78, 97.81, 95.03, 102.9, 104367], ["2025-09-30", 92.57, 95.36, 90.5, 99.33, 94756], ["2025-09-26", 87.84, 92.72, 85.18, 95.83, 202769], ["2025-09-19", 81.94, 89.02, 77.09, 91.44, 246821], ["2025-09-12", 80.99, 81.94, 78.32, 84.94, 205758], ["2025-09-05", 75.38, 81.23, 73.54, 83.34, 207079], ["2025-08-29", 76.34, 75.84, 71.84, 79.73, 174905], ["2025-08-22", 78.81, 75.78, 74.94, 81.84, 156662], ["2025-08-15", 68.57, 79.31, 68.2, 80.61, 328117], ["2025-08-08", 67.55, 68.35, 65.06, 70.79, 150092], ["2025-08-01", 65.87, 67.83, 64.23, 69.04, 155429], ["2025-07-25", 66.25, 65.84, 63.26, 68.19, 176361], ["2025-07-18", 68.06, 66.14, 64.0, 68.82, 141295], ["2025-07-11", 69.15, 68.05, 66.38, 74.12, 143695], ["2025-07-04", 70.59, 69.46, 68.59, 77.61, 192675], ["2025-06-27", 68.8, 69.85, 67.9, 71.13, 115806], ["2025-06-20", 66.99, 68.79, 66.94, 72.79, 167671], ["2025-06-13", 64.76, 66.99, 64.16, 68.64, 137245]];
+var UP_COLOR = '#ef5350', DOWN_COLOR = '#26a69a';
+
+function makeKline(domId, kdata, title, isWeek) {
+  var dom = document.getElementById(domId);
+  if (!dom || !kdata.length) return;
+  var chart = echarts.init(dom);
+  var dates = [], ohlc = [], vols = [];
+  kdata.forEach(function(r) {
+    dates.push(r[0]); ohlc.push([r[1], r[2], r[3], r[4]]); vols.push(r[5]);
+  });
+
+  var markLines = [
+    { name: '高点 ¥70.34', yAxis: 70.34, lineStyle: { color: '#ef5350', type: 'dashed', width: 1, opacity: 0.7 }, label: { show: true, position: 'end', color: '#ef5350', fontSize: 10, formatter: '高点 ¥{c}\n↓46.9%' } },
+    { name: '低点 ¥37.34', yAxis: 37.34, lineStyle: { color: '#26a69a', type: 'dashed', width: 1, opacity: 0.7 }, label: { show: true, position: 'start', color: '#26a69a', fontSize: 10, formatter: '低点 ¥{c}\n↑62.0%' } },
+    { name: '现价 ¥60.50', yAxis: 60.5, lineStyle: { color: '#ff9800', type: 'solid', width: 1.5, opacity: 0.8 }, label: { show: true, position: 'start', color: '#ff9800', fontSize: 10, formatter: '现价 ¥{c}' } }
+  ];
+
+  // MA lines
+  var maLine = function(period, color) {
+    return { name: 'MA'+period, type: 'line', data: ohlc.map(function(d,i) {
+      if (i < period-1) return null;
+      var sum = 0; for (var j=i-period+1; j<=i; j++) sum += ohlc[j][1];
+      return sum/period;
+    }), smooth: true, symbol: 'none', lineStyle: { color: color, width: 1, opacity: 0.6 } };
+  };
+
+  chart.setOption({
+    backgroundColor: '#141722',
+    tooltip: { trigger: 'axis', axisPointer: { type: 'cross' }, backgroundColor: 'rgba(20,23,34,0.95)', borderColor: '#2a2e39', textStyle: { color: '#d1d4dc', fontSize: 12 } },
+    grid: [{ left: '3%', right: '8%', top: '2%', height: '62%' }, { left: '3%', right: '8%', top: '72%', height: '16%' }],
+    xAxis: [{ type: 'category', data: dates, boundaryGap: true, axisLine: { lineStyle: { color: '#2a2e39' } }, axisLabel: { color: '#787b86', fontSize: 10, formatter: function(v){return v.slice(5)} }, splitLine: { show: false } },
+            { type: 'category', gridIndex: 1, data: dates, boundaryGap: true, axisLine: { show: false }, axisLabel: { show: false }, splitLine: { show: false } }],
+    yAxis: [{ scale: true, splitLine: { lineStyle: { color: '#1e222d' } }, axisLabel: { color: '#787b86', fontSize: 10 } },
+            { scale: true, gridIndex: 1, splitNumber: 2, axisLabel: { color: '#787b86', fontSize: 9, formatter: function(v){return (v/1e6).toFixed(0)+'M'} }, axisLine: { show: false }, splitLine: { show: false } }],
+    dataZoom: [{ type: 'inside', xAxisIndex: [0,1], start: 0, end: 100 }],
+    series: [
+      { name: title, type: 'candlestick', data: ohlc, itemStyle: { color: UP_COLOR, color0: DOWN_COLOR, borderColor: UP_COLOR, borderColor0: DOWN_COLOR },
+         markLine: { silent: true, symbol: 'none', data: markLines } },
+      { name: '成交量', type: 'bar', xAxisIndex: 1, yAxisIndex: 1, data: vols.map(function(v,i){return {value:v,itemStyle:{color:ohlc[i][1]>=ohlc[i][0]?UP_COLOR:DOWN_COLOR}};}) },
+      maLine(5, '#4285f4'), maLine(10, '#ce93d8'), maLine(20, '#ff9800'), maLine(60, '#22ab94')
+    ]
+  });
+  window.addEventListener('resize', function(){ chart.resize(); });
+}
+
+setTimeout(function() {
+  makeKline('dayChart', DAY_DATA, '日K', false);
+  makeKline('weekChart', WEEK_DATA, '周K', true);
+}, 300);
+</script>
+</body>
+</html>
