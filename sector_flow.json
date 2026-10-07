@@ -1,6 +1,6 @@
 {
   "updated": "2026-09-26",
-  "source": "eastmoney push2delay 主力净流入(5/10/20日累计，真实)",
+  "source": "eastmoney push2delay 主力净流入(5/10/20日累计，真实) | 沙箱东财被拦，2026-10-07 复用作真实累计兜底",
   "unit": "亿元",
   "mode": "aggregate",
   "sectors": [
@@ -1504,5 +1504,6 @@
       ],
       "chgpct": 0.41
     }
-  ]
+  ],
+  "fallback_used": "2026-10-07"
 }
