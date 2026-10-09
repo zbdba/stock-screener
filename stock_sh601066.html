@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>中信建投(sh601066) - 深度分析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f1117;color:#d1d4dc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif}
+.header{padding:14px 20px;border-bottom:1px solid #2a2e39;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:16px;color:#fff} .header a{color:#5b9bd5;text-decoration:none;font-size:12px}
+.container{max-width:1400px;margin:0 auto;padding:16px 20px;display:grid;grid-template-columns:320px 1fr;gap:16px}
+@media(max-width:768px){.container{grid-template-columns:1fr}}
+.card{background:#141722;border:1px solid #2a2e39;border-radius:10px;padding:16px}
+.card-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title .dot{width:8px;height:8px;border-radius:50%}
+.gauge-wrap{text-align:center;padding:20px 0}
+.gauge-val{font-size:48px;font-weight:700;color:#22ab94}
+.gauge-label{font-size:12px;color:#787b86;margin-top:4px}
+.gauge-bar{display:flex;gap:4px;margin-top:12px}
+.gauge-bar div{flex:1;height:6px;border-radius:3px;position:relative}
+.gauge-bar .bar-val{background:#22ab94;opacity:0.2}
+.gauge-bar .bar-fill{position:absolute;top:0;left:0;height:100%;border-radius:3px}
+.score-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid #1e222d}
+.score-row .s-label{color:#787b86}
+.score-row .s-val{color:#fff;font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.met{text-align:center;padding:8px;background:#1a1d27;border-radius:6px}
+.met .m-label{font-size:10px;color:#787b86}
+.met .m-val{font-size:14px;color:#fff;font-weight:600;margin-top:2px}
+.chart-wrap{width:100%;height:380px;margin-top:8px}
+.warn{font-size:11px;color:#ef9a9a;padding:8px 12px;background:rgba(239,83,80,0.08);border-radius:6px;margin-top:10px}
+.build-bar{margin:6px 0}
+.build-bar .bar-label{display:flex;justify-content:space-between;font-size:11px;color:#787b86;margin-bottom:2px}
+.build-bar .bar-track{height:8px;background:#1a1d27;border-radius:4px;overflow:hidden}
+.build-bar .bar-fill{height:100%;border-radius:4px}
+.rating-tag{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600;margin-top:4px}
+.rating-recommend{background:rgba(34,171,148,0.2);color:#22ab94}
+.rating-watch{background:rgba(214,166,74,0.2);color:#d6a64a}
+.rating-avoid{background:rgba(239,83,80,0.2);color:#ef5350}
+.num-up{color:#ef5350}.num-down{color:#26a69a}
+.footer{text-align:center;padding:12px;color:#787b86;font-size:10px;border-top:1px solid #2a2e39;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>中信建投 <span style="color:#787b86;font-size:13px">sh601066</span></h1>
+  <a href="index.html">← 返回列表</a>
+</div>
+<div class="container">
+<div class="sidebar">
+  <div class="card">
+    <div class="gauge-wrap">
+      <div class="gauge-val">95</div>
+      <div class="gauge-label">综合评分 / 100</div>
+      <span class="rating-tag rating-recommend">强烈推荐</span>
+    </div>
+    <div class="score-row"><span class="s-label">估值评分</span><span class="s-val">30/35</span></div>
+    <div class="score-row"><span class="s-label">技术评分</span><span class="s-val">35/35</span></div>
+    <div class="score-row"><span class="s-label">反弹评分</span><span class="s-val">30/30</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#5b9bd5"></span> 估值面板</div>
+    <div class="grid2">
+      <div class="met"><div class="m-label">PE(TTM)</div><div class="m-val">14.3</div></div>
+      <div class="met"><div class="m-label">PB</div><div class="m-val">0.00</div></div>
+      <div class="met"><div class="m-label">PS(TTM)</div><div class="m-val">0.00</div></div>
+      <div class="met"><div class="m-label">PCF(TTM)</div><div class="m-val">0.00</div></div>
+      <div class="met"><div class="m-label">股息率</div><div class="m-val">0.00%</div></div>
+      <div class="met"><div class="m-label">总市值</div><div class="m-val" style="font-size:11px">1508亿</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ef5350"></span> 涨跌幅</div>
+    <div class="score-row"><span class="s-label">今日</span><span class="s-val num-up">+2.02%</span></div>
+    <div class="score-row"><span class="s-label">5日</span><span class="s-val num-down">-0.81%</span></div>
+    <div class="score-row"><span class="s-label">10日</span><span class="s-val num-up">+0.09%</span></div>
+    <div class="score-row"><span class="s-label">20日</span><span class="s-val num-down">-7.16%</span></div>
+    <div class="score-row"><span class="s-label">60日</span><span class="s-val num-down">-20.31%</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#d6a64a"></span> 建仓分析</div>
+    <div class="build-bar">
+      <div class="bar-label"><span>支撑位</span><span>¥23.08</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:95%;background:linear-gradient(90deg,#26a69a,#ef5350)"></div></div>
+    </div>
+    <div class="build-bar">
+      <div class="bar-label"><span>当前价</span><span style="color:#fff;font-weight:600">¥29.39</span></div>
+    </div>
+    <div class="build-bar">
+      <div class="bar-label"><span>阻力位</span><span>¥26.20</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:5%;background:linear-gradient(90deg,#ef5350,#26a69a)"></div></div>
+    </div>
+    <div class="score-row"><span class="s-label">止损建议</span><span class="s-val" style="color:#ef5350">¥26.45 (-10%)</span></div>
+    <div class="score-row"><span class="s-label">反弹空间</span><span class="s-val" style="color:#22ab94">15.4% (高点→低点)</span></div>
+    <div class="score-row"><span class="s-label">已反弹</span><span class="s-val" style="color:#d6a64a">29.8% (低点→现价)</span></div>
+  </div>
+</div>
+<div class="main">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#4285f4"></span> 日K线图（最近60个交易日）</div>
+    <div class="chart-wrap" id="dayChart"></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#ce93d8"></span> 周K线图（最近60周）</div>
+    <div class="chart-wrap" id="weekChart"></div>
+  </div>
+  <div class="warn">
+    ⚠️ <strong>风险提示</strong>：本页面仅为数据展示，不构成投资建议。深度超跌反弹具有较高不确定性，请结合基本面综合判断。止损位建议严格设在 -10%。
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:#22ab94"></span> 操作参考</div>
+    <div style="font-size:12px;line-height:1.8;color:#d1d4dc">
+      <p><strong>📊 当前状态</strong>：中信建投 60日跌幅 -20.3%，近期10日回升 0.1%，反弹力度偏弱。</p>
+      <p style="margin-top:8px"><strong>🎯 建议</strong>：可以小仓位试探性建仓，等待周线确认后加仓。</p>
+      <p style="margin-top:8px"><strong>🛡 风控</strong>：若建仓，止损设在 ¥26.45（-10%），止盈目标为阻力位 ¥26.20。</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <a href="index.html">← 返回列表</a> | 数据: westock-data | 生成: 2026-10-09 | <a href="https://zbdba.github.io/stock-screener/">GitHub Pages</a>
+</div>
+<script>
+var DAY_DATA = [["2026-09-16", 23.42, 23.56, 23.14, 23.64, 114220], ["2026-09-15", 23.52, 23.4, 23.37, 23.66, 115434], ["2026-09-14", 23.74, 23.6, 23.5, 23.8, 114348], ["2026-09-11", 24.3, 23.76, 23.61, 24.3, 162272], ["2026-09-10", 24.24, 24.41, 24.14, 24.49, 112392], ["2026-09-09", 24.3, 24.25, 24.06, 24.32, 132995], ["2026-09-08", 24.95, 24.36, 24.33, 24.95, 221296], ["2026-09-07", 25.27, 24.85, 24.78, 25.42, 175174], ["2026-09-04", 25.1, 25.28, 25.03, 25.78, 227804], ["2026-09-03", 24.81, 25.0, 24.81, 25.38, 159179], ["2026-09-02", 25.4, 24.81, 24.8, 25.47, 173964], ["2026-09-01", 25.47, 25.55, 25.45, 25.74, 167938], ["2026-08-31", 25.57, 25.6, 25.18, 25.63, 154117], ["2026-08-28", 25.77, 25.58, 25.47, 25.78, 152258], ["2026-08-27", 25.27, 25.78, 25.0, 25.79, 287017], ["2026-08-26", 24.65, 25.27, 24.6, 25.47, 295840], ["2026-08-25", 24.78, 24.64, 24.41, 24.79, 152402], ["2026-08-24", 24.78, 24.79, 24.62, 25.0, 165795], ["2026-08-21", 24.82, 24.78, 24.62, 24.93, 119955], ["2026-08-20", 25.25, 24.81, 24.6, 25.29, 163795], ["2026-08-19", 25.035, 24.945, 24.925, 25.505, 227933], ["2026-08-18", 25.535, 25.255, 24.725, 25.625, 330342], ["2026-08-17", 25.295, 25.595, 25.215, 25.615, 213874], ["2026-08-14", 25.815, 25.365, 25.275, 25.955, 236012], ["2026-08-13", 25.575, 25.795, 25.555, 26.295, 324651], ["2026-08-12", 25.435, 25.525, 25.325, 25.705, 182709], ["2026-08-11", 25.725, 25.535, 25.515, 26.085, 283742], ["2026-08-10", 25.875, 25.785, 25.655, 25.995, 196748], ["2026-08-07", 25.655, 25.865, 25.395, 25.865, 213317], ["2026-08-06", 25.805, 25.775, 25.435, 25.825, 242236], ["2026-08-05", 25.505, 25.855, 25.505, 26.025, 252347], ["2026-08-04", 25.425, 25.675, 25.375, 25.805, 222476], ["2026-08-03", 25.325, 25.385, 25.125, 25.665, 223323], ["2026-07-31", 25.705, 25.595, 25.505, 26.075, 256117], ["2026-07-30", 25.565, 25.665, 25.185, 26.025, 218672], ["2026-07-29", 25.305, 25.695, 25.105, 25.885, 240822], ["2026-07-28", 26.055, 25.265, 25.215, 26.165, 283033], ["2026-07-27", 25.815, 26.275, 25.425, 26.305, 251444], ["2026-07-24", 26.675, 25.895, 25.825, 26.685, 284955], ["2026-07-23", 26.535, 26.735, 26.135, 27.055, 276661], ["2026-07-22", 26.125, 26.665, 25.975, 27.155, 412779], ["2026-07-21", 26.525, 26.475, 25.775, 26.755, 406796], ["2026-07-20", 26.505, 26.485, 26.025, 26.945, 335897], ["2026-07-17", 26.555, 26.325, 26.325, 27.325, 381441], ["2026-07-16", 27.175, 26.735, 26.565, 27.375, 309862], ["2026-07-15", 26.895, 27.645, 26.535, 27.825, 451062], ["2026-07-14", 26.175, 26.785, 25.955, 26.785, 343239], ["2026-07-13", 26.725, 26.485, 25.425, 27.015, 439651], ["2026-07-10", 28.865, 27.075, 27.065, 28.885, 724523], ["2026-07-09", 28.025, 29.125, 27.555, 29.215, 709481], ["2026-07-08", 27.725, 27.585, 27.435, 28.625, 458390], ["2026-07-07", 28.105, 27.755, 27.595, 28.675, 446919], ["2026-07-06", 28.795, 28.485, 28.185, 28.875, 535296], ["2026-07-03", 28.425, 28.145, 27.705, 28.695, 545803], ["2026-07-02", 29.535, 28.195, 28.145, 29.535, 839063], ["2026-07-01", 28.825, 29.835, 28.545, 30.605, 1223497], ["2026-06-30", 28.905, 28.895, 28.495, 29.475, 791821], ["2026-06-29", 29.845, 29.285, 28.895, 30.705, 1084827], ["2026-06-26", 29.425, 30.075, 29.425, 31.225, 1463858], ["2026-06-25", 27.555, 29.385, 27.185, 30.325, 1539493]];
+var WEEK_DATA = [["2026-10-09", 23.01, 23.21, 22.63, 23.32, 242902], ["2026-09-30", 23.33, 23.03, 22.91, 23.39, 256541], ["2026-09-24", 23.65, 23.4, 23.35, 23.96, 382355], ["2026-09-18", 23.74, 23.62, 23.14, 23.8, 605491], ["2026-09-11", 25.27, 23.76, 23.61, 25.42, 804129], ["2026-09-04", 25.57, 25.28, 24.8, 25.78, 883002], ["2026-08-28", 24.78, 25.58, 24.41, 25.79, 1053312], ["2026-08-21", 25.295, 24.78, 24.6, 25.625, 1055899], ["2026-08-14", 25.875, 25.365, 25.275, 26.295, 1223862], ["2026-08-07", 25.325, 25.865, 25.125, 26.025, 1153699], ["2026-07-31", 25.815, 25.595, 25.105, 26.305, 1250088], ["2026-07-24", 26.505, 25.895, 25.775, 27.155, 1717088], ["2026-07-17", 26.725, 26.325, 25.425, 27.825, 1925255], ["2026-07-10", 28.795, 27.075, 27.065, 29.215, 2874609], ["2026-07-03", 29.845, 28.145, 27.705, 30.705, 4485011], ["2026-06-26", 24.625, 30.075, 24.625, 31.225, 6346323], ["2026-06-18", 25.245, 24.725, 24.725, 26.285, 1743166], ["2026-06-12", 24.365, 25.285, 23.885, 25.455, 1989290], ["2026-06-05", 23.875, 24.365, 23.725, 26.355, 2725227], ["2026-05-29", 21.995, 24.215, 21.925, 25.005, 2161281], ["2026-05-22", 21.845, 21.825, 21.725, 22.965, 867791], ["2026-05-15", 22.705, 21.995, 21.835, 23.025, 709463], ["2026-05-08", 22.975, 22.745, 22.665, 23.235, 589784], ["2026-04-30", 21.155, 22.825, 21.155, 23.355, 762965], ["2026-04-24", 21.735, 21.255, 21.155, 21.825, 420313], ["2026-04-17", 21.425, 21.665, 21.385, 21.955, 421078], ["2026-04-10", 20.945, 21.605, 20.725, 22.245, 493148], ["2026-04-03", 21.265, 20.935, 20.915, 21.675, 344996], ["2026-03-27", 21.845, 21.415, 21.125, 22.045, 506293], ["2026-03-20", 22.725, 22.405, 22.405, 23.275, 557456], ["2026-03-13", 22.745, 22.765, 22.485, 23.015, 484144], ["2026-03-06", 23.425, 22.975, 22.705, 23.705, 629836], ["2026-02-27", 23.825, 23.675, 23.415, 24.035, 514454], ["2026-02-13", 24.325, 23.845, 23.825, 24.325, 421208], ["2026-02-06", 23.825, 24.135, 23.605, 24.605, 827429], ["2026-01-30", 24.455, 23.875, 23.595, 24.715, 1066842], ["2026-01-23", 24.805, 24.535, 24.445, 25.025, 864983], ["2026-01-16", 26.085, 24.905, 24.825, 26.425, 1249839], ["2026-01-09", 26.56, 25.975, 25.845, 27.15, 1288045], ["2025-12-31", 26.42, 26.43, 26.24, 26.74, 447236], ["2025-12-26", 26.77, 26.48, 26.3, 26.83, 866169], ["2025-12-19", 26.07, 26.8, 25.99, 27.3, 1807309], ["2025-12-12", 25.66, 26.16, 25.36, 26.26, 1408243], ["2025-12-05", 24.48, 25.38, 24.46, 25.62, 902928], ["2025-11-28", 24.54, 24.45, 24.21, 24.69, 467297], ["2025-11-21", 25.01, 24.46, 24.38, 25.66, 529207], ["2025-11-14", 25.28, 24.97, 24.97, 25.7, 448748], ["2025-11-07", 25.84, 25.27, 25.27, 25.94, 522575], ["2025-10-31", 26.46, 25.85, 25.85, 26.85, 824642], ["2025-10-24", 26.11, 26.17, 25.48, 26.32, 527990], ["2025-10-17", 25.92, 25.81, 25.7, 26.63, 792689], ["2025-10-10", 26.48, 26.45, 25.96, 26.86, 442658], ["2025-09-30", 25.19, 26.48, 25.17, 26.78, 578732], ["2025-09-26", 25.86, 25.17, 25.11, 25.95, 718130], ["2025-09-19", 26.13, 25.85, 25.76, 27.64, 1058345], ["2025-09-12", 26.43, 26.09, 25.7, 26.49, 771015], ["2025-09-05", 28.02, 26.54, 25.96, 28.45, 1466893], ["2025-08-29", 27.59, 28.02, 26.43, 29.03, 1648404], ["2025-08-22", 26.905, 27.38, 26.415, 27.695, 1302285], ["2025-08-15", 25.125, 26.725, 25.115, 26.995, 1223759]];
+var UP_COLOR = '#ef5350', DOWN_COLOR = '#26a69a';
+
+function makeKline(domId, kdata, title, isWeek) {
+  var dom = document.getElementById(domId);
+  if (!dom || !kdata.length) return;
+  var chart = echarts.init(dom);
+  var dates = [], ohlc = [], vols = [];
+  kdata.forEach(function(r) {
+    dates.push(r[0]); ohlc.push([r[1], r[2], r[3], r[4]]); vols.push(r[5]);
+  });
+
+  var markLines = [
+    { name: '高点 ¥26.73', yAxis: 26.735, lineStyle: { color: '#ef5350', type: 'dashed', width: 1, opacity: 0.7 }, label: { show: true, position: 'end', color: '#ef5350', fontSize: 10, formatter: '高点 ¥{c}\n↓15.4%' } },
+    { name: '低点 ¥22.63', yAxis: 22.63, lineStyle: { color: '#26a69a', type: 'dashed', width: 1, opacity: 0.7 }, label: { show: true, position: 'start', color: '#26a69a', fontSize: 10, formatter: '低点 ¥{c}\n↑29.8%' } },
+    { name: '现价 ¥29.39', yAxis: 29.385, lineStyle: { color: '#ff9800', type: 'solid', width: 1.5, opacity: 0.8 }, label: { show: true, position: 'start', color: '#ff9800', fontSize: 10, formatter: '现价 ¥{c}' } }
+  ];
+
+  // MA lines
+  var maLine = function(period, color) {
+    return { name: 'MA'+period, type: 'line', data: ohlc.map(function(d,i) {
+      if (i < period-1) return null;
+      var sum = 0; for (var j=i-period+1; j<=i; j++) sum += ohlc[j][1];
+      return sum/period;
+    }), smooth: true, symbol: 'none', lineStyle: { color: color, width: 1, opacity: 0.6 } };
+  };
+
+  chart.setOption({
+    backgroundColor: '#141722',
+    tooltip: { trigger: 'axis', axisPointer: { type: 'cross' }, backgroundColor: 'rgba(20,23,34,0.95)', borderColor: '#2a2e39', textStyle: { color: '#d1d4dc', fontSize: 12 } },
+    grid: [{ left: '3%', right: '8%', top: '2%', height: '62%' }, { left: '3%', right: '8%', top: '72%', height: '16%' }],
+    xAxis: [{ type: 'category', data: dates, boundaryGap: true, axisLine: { lineStyle: { color: '#2a2e39' } }, axisLabel: { color: '#787b86', fontSize: 10, formatter: function(v){return v.slice(5)} }, splitLine: { show: false } },
+            { type: 'category', gridIndex: 1, data: dates, boundaryGap: true, axisLine: { show: false }, axisLabel: { show: false }, splitLine: { show: false } }],
+    yAxis: [{ scale: true, splitLine: { lineStyle: { color: '#1e222d' } }, axisLabel: { color: '#787b86', fontSize: 10 } },
+            { scale: true, gridIndex: 1, splitNumber: 2, axisLabel: { color: '#787b86', fontSize: 9, formatter: function(v){return (v/1e6).toFixed(0)+'M'} }, axisLine: { show: false }, splitLine: { show: false } }],
+    dataZoom: [{ type: 'inside', xAxisIndex: [0,1], start: 0, end: 100 }],
+    series: [
+      { name: title, type: 'candlestick', data: ohlc, itemStyle: { color: UP_COLOR, color0: DOWN_COLOR, borderColor: UP_COLOR, borderColor0: DOWN_COLOR },
+         markLine: { silent: true, symbol: 'none', data: markLines } },
+      { name: '成交量', type: 'bar', xAxisIndex: 1, yAxisIndex: 1, data: vols.map(function(v,i){return {value:v,itemStyle:{color:ohlc[i][1]>=ohlc[i][0]?UP_COLOR:DOWN_COLOR}};}) },
+      maLine(5, '#4285f4'), maLine(10, '#ce93d8'), maLine(20, '#ff9800'), maLine(60, '#22ab94')
+    ]
+  });
+  window.addEventListener('resize', function(){ chart.resize(); });
+}
+
+setTimeout(function() {
+  makeKline('dayChart', DAY_DATA, '日K', false);
+  makeKline('weekChart', WEEK_DATA, '周K', true);
+}, 300);
+</script>
+</body>
+</html>
